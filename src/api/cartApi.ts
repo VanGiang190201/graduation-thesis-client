@@ -9,9 +9,9 @@ export const getListCart = async () => {
     }
 };
 
-export const addCart = async (data: object, cartId: string) => {
+export const addCart = async (data: object) => {
     try {
-        const res = await httpRequest.put(`/cart/${cartId}`, data);
+        const res = await httpRequest.post(`/cart/add-new`, data);
         return res;
     } catch (error) {
         console.log(error);

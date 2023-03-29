@@ -59,3 +59,13 @@ export const getListImageProduct = async (id: number) => {
         console.log(error);
     }
 };
+
+export const getHotSaleProduct = async () => {
+    const path = '/products/top-sale';
+    try {
+        const res = await httpRequest.get(path);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};

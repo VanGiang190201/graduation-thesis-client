@@ -24,6 +24,7 @@ import LatestProductItem from './LatestProductItem';
 import TrendingBanner from './TrendingBanner';
 import Advertisement from './Advertisement';
 import FeatureProduct from './FeatureProduct';
+import HotSaleProduct from './HotSaleProduct';
 
 interface IHomeProps {}
 
@@ -38,8 +39,8 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     useEffect(() => {
         productRequest.getProducts().then((res) => {
             setIsLoading(false);
-            const filterLatestProducts = res.filter((item: IProduct) => item.type === 'Latest Products');
-            const filterTrendingProducts = res.filter((item: IProduct) => item.type === 'Trending Products');
+            const filterLatestProducts = res?.filter((item: IProduct) => item.type === 'Latest Products');
+            const filterTrendingProducts = res?.filter((item: IProduct) => item.type === 'Trending Products');
             setLatestProducts(filterLatestProducts);
             setTrendingProducts(filterTrendingProducts);
         });
@@ -87,13 +88,6 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                 </div>
                 <Advertisement data={adIsUsed} onClick={handleRoute} />
                 <FeatureProduct data={listPortfolios} />
-                <div className="latest-product-wrapper">
-                    <ListProduct title="Latest Products">
-                        {latestProducts.map((item, index) => (
-                            <LatestProductItem data={item} key={index} />
-                        ))}
-                    </ListProduct>
-                </div>
                 <div className="wrapper-offer">
                     <Features title="What Shopex Offer!">
                         <FeatureItem
@@ -122,11 +116,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                     <TrendingBanner />
                 </div>
                 <div className="trending-product-wrapper">
-                    <ListProduct title="Trending Products">
-                        {trendingProducts.map((item, index) => (
-                            <TrendingProductItem data={item} key={index} />
-                        ))}
-                    </ListProduct>
+                    <HotSaleProduct />
                 </div>
 
                 <BackgroundImage />

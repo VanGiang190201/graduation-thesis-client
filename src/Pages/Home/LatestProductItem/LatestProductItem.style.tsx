@@ -4,10 +4,6 @@ const Wrapper = styled.div`
     width: 36rem;
     height: 30rem;
     margin-bottom: 5rem;
-    margin-left: 3rem;
-    &:nth-child(3n + 1) {
-        margin-left: 0;
-    }
     scroll-snap-align: center;
     &:hover {
         cursor: pointer;
@@ -85,12 +81,18 @@ const Wrapper = styled.div`
         top: -0.2rem;
         left: 0;
     }
+    .hot-label {
+        position: absolute;
+        top: -0.2rem;
+        right: 1rem;
+    }
     .information-product {
         height: 3rem;
         width: 100%;
         display: flex;
         align-items: center;
         padding: 2rem 0.4rem;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     }
     .name-product-wrapper {
         flex: 1;
@@ -102,7 +104,6 @@ const Wrapper = styled.div`
         max-width: 100%;
         color: #151875;
         font-weight: 600;
-        border-bottom: 2px solid #eeeffb;
     }
 
     .sale-price {

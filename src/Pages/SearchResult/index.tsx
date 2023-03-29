@@ -20,7 +20,7 @@ const SearchResult: React.FunctionComponent<ISearchResultProps> = (props) => {
         const lowerCaseValue = keyword?.toLowerCase().trim();
         productRequest.getProducts().then((res) => {
             setIsLoading(false);
-            const fillerData = res.filter((item: any) => {
+            const fillerData = res?.filter((item: any) => {
                 return Object.keys(item).some((key) => {
                     return item[key]?.toString()?.toLowerCase()?.includes(lowerCaseValue);
                 });

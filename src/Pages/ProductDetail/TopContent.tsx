@@ -16,6 +16,7 @@ import { addProductToWishList, deleteProductToWishList } from '../../reudux/feat
 import { useAppDisPatch, useAppSelector } from '../../reudux/hook';
 import { IProduct, IGetImage } from '../../Utils/interface';
 import { TopContentWrapper } from './ProductDetail.style';
+import { Image as ImageAnt } from 'antd';
 
 interface ITopContentProps {
     data: IProduct;
@@ -28,7 +29,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
     const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
     const dispatch = useAppDisPatch();
     const [currentImage, setCurrentImage] = React.useState<string>(data.image_product);
-    const [color, setColor] = React.useState<string>('black');
+    const [selectCodeImage, setSelectCodeImage] = React.useState<string>('DZ-XX');
     const [quantity, setQuantity] = React.useState<number>(1);
     const [isLight, setIsLight] = React.useState<boolean>(false);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -36,49 +37,27 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
     const [size, setSize] = React.useState<string>('L');
     const salePrice = data?.price_product - (data?.price_product * data.sale) / 100;
 
-    console.log(listOtherImage);
-
     React.useEffect(() => {
         productRequest.getListImageProduct(data.id).then((res) => setListOtherImage(res));
     }, [data.id]);
 
-    const handlePickColor = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setColor(e.target.value);
-    };
     const handleAddCart = () => {
         setIsLoading(true);
         if (Object.keys(currentUser).length > 0) {
-            cartRequest.getListCart().then((res) =>
-                dispatch(
-                    addCart({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        cart: [
-                            ...res[0].cart,
-                            {
-                                product_id: data.id,
-                                amount: quantity,
-                                color: color,
-                                size: size,
-                                sub_total: salePrice * quantity,
-                            },
-                        ],
-                    }),
-                )
-                    .unwrap()
-                    .then((data) => {
-                        setIsLoading(false);
-                        toast.success(<div onClick={() => navigate(config.cart)}>Add cart susses ✔</div>, {
-                            position: 'top-right',
-                            autoClose: 1000,
-                            hideProgressBar: false,
-                            closeOnClick: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: 'dark',
-                        });
-                    }),
-            );
+            dispatch(addCart({ selected_code_product: selectCodeImage, number: quantity, product_id: data.id }))
+                .unwrap()
+                .then((res) => {
+                    setIsLoading(false);
+                    toast.success(<div onClick={() => navigate(config.cart)}>{res.message}</div>, {
+                        position: 'top-right',
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'dark',
+                    });
+                });
         } else {
             setTimeout(
                 () =>
@@ -186,7 +165,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
         setCurrentImage(image);
     };
     return (
-        <TopContentWrapper color={color}>
+        <TopContentWrapper>
             <div className="top-content">
                 <div className="images-wrapper">
                     {listOtherImage.length > 0 && (
@@ -203,7 +182,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                         </div>
                     )}
                     <div className="right-images">
-                        <Image src={currentImage} alt="" className="bg-image" />
+                        <ImageAnt src={currentImage} alt="" className="bg-image" />
                     </div>
                 </div>
                 <div className="information-wrapper">
@@ -221,56 +200,6 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                         }`}</p>
                         <p className="normal-price">{`$ ${data?.price_product}`}</p>
                     </div>
-                    {/* <div className="list-color">
-                        <p>Color </p>
-                        <div className="container-radio">
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="group"
-                                id="yellow"
-                                value="yellow"
-                                onChange={handlePickColor}
-                            />
-                            <label
-                                htmlFor="yellow"
-                                className={`label-yellow ${color === 'yellow' ? 'checked' : ''}`}
-                            ></label>
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="group"
-                                id="red"
-                                value="red"
-                                onChange={handlePickColor}
-                            />
-                            <label htmlFor="red" className={`label-red ${color === 'red' ? 'checked' : ''}`}></label>
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="group"
-                                id="black"
-                                value="black"
-                                onChange={handlePickColor}
-                            />
-                            <label
-                                htmlFor="black"
-                                className={`label-black ${color === 'black' ? 'checked' : ''}`}
-                            ></label>
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="group"
-                                id="green"
-                                value="green"
-                                onChange={handlePickColor}
-                            />
-                            <label
-                                htmlFor="green"
-                                className={`label-green ${color === 'green' ? 'checked' : ''}`}
-                            ></label>
-                        </div>
-                    </div> */}
                     <Text textOfLine={3} className="description-product">
                         {data?.description_product}
                     </Text>

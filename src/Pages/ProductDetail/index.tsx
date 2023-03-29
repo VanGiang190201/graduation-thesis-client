@@ -40,7 +40,7 @@ const ProductDetail: React.FunctionComponent<IProduct> = (props) => {
 
     useEffect(() => {
         productRequest.getProducts().then((res) => {
-            const relatedProduct = res.filter((item: IProduct) => item.type === 'Trending Products');
+            const relatedProduct = res?.filter((item: IProduct) => item.type === 'Trending Products');
             setRelatedProduct(relatedProduct);
         });
     }, []);

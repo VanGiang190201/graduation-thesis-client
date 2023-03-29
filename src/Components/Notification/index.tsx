@@ -87,7 +87,7 @@ const Notification: React.FunctionComponent<INotificationProps> = (props) => {
     const notificationList = useAppSelector((state) => state.persistedReducer.notification.listNotification);
     const dispatch = useAppDisPatch();
     const handleReadNotification = () => {
-        const otherNotificationList = notificationList.filter(
+        const otherNotificationList = notificationList?.filter(
             (notification) => notification.notification_id !== data.notification_id,
         );
         const notificationWasRead = {

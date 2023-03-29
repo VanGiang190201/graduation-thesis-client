@@ -8,7 +8,7 @@ import DefaultLayout from './Layouts/DefaultLayout';
 import { useAppSelector } from './reudux/hook';
 import { useAppDisPatch } from './reudux/hook';
 import { apiClient } from './api/apiClient';
-import { loadCart } from './reudux/feature/cartSlide';
+// import { loadCart } from './reudux/feature/cartSlide';
 import { loadWishList } from './reudux/feature/wishListSlide';
 import { publicRoutes, privateRoutes, BlockRoute } from './routes';
 import { BlockRouter, ProtectRouter } from './routes/CustomRoute';
@@ -16,7 +16,7 @@ import { getMessagingToken, onMessageListener } from './firebase/firebase.config
 import { addNewNotification, loadNotification, notificationSlide } from './reudux/feature/notificationSlide';
 import Image from './Components/Image';
 import * as notificationRequest from './api/notificationApi';
-import { ICart, IGetNotification, IUser } from './Utils/interface';
+import { IGetNotification, IUser } from './Utils/interface';
 
 function App() {
     const dispatch = useAppDisPatch();
@@ -36,9 +36,9 @@ function App() {
         window.scrollTo({ top: 0 });
     }, [location.pathname]);
 
-    useEffect(() => {
-        dispatch(loadCart(currentUser.id));
-    }, [access_token, cart?.length]);
+    // useEffect(() => {
+    //     dispatch(loadCart(currentUser.id));
+    // }, [access_token, cart?.length]);
 
     useEffect(() => {
         dispatch(loadWishList(currentUser?.id));

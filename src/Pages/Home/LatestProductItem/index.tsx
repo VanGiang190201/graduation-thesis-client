@@ -6,7 +6,7 @@ import Wrapper from './LatestProductItem.style';
 import Image from '../../../Components/Image';
 import Button from '../../../Components/Button';
 import { CartIcon, HeartIcon, SearchPlusIcon } from '../../../Components/Icons';
-import { saleLabel } from '../../../assets/images';
+import { saleLabel, hotLabel } from '../../../assets/images';
 import { IProduct } from '../../../Utils/interface';
 import { useAppDisPatch, useAppSelector } from '../../../reudux/hook';
 import * as cartRequest from '../../../api/cartApi';
@@ -44,7 +44,7 @@ const LatestProductItem: React.FunctionComponent<ILatestProductItemProps> = (pro
     //Add product to cart
     const handleAddCart = () => {
         if (Object.keys(currentUser).length > 0) {
-            cartRequest.getListCartByUserId(currentUser.id).then((res) => {
+            cartRequest.getListCart().then((res) => {
                 dispatch(
                     addCart({
                         id: res[0].id,
@@ -151,7 +151,7 @@ const LatestProductItem: React.FunctionComponent<ILatestProductItemProps> = (pro
         setLevelRoom((prev) => prev + 1);
     };
     const handleViewDetail = () => {
-        navigate(`/product-detail/${data.id}`, { state: data.id });
+        navigate(`/products/${data.id}`, { state: data.id });
     };
     return (
         <Wrapper>
@@ -187,6 +187,7 @@ const LatestProductItem: React.FunctionComponent<ILatestProductItemProps> = (pro
                     </Button>
                 </div>
                 {data.sale && <Image src={saleLabel} alt="sale-label" className="sale-label" />}
+                {data.sale > 40 && <Image src={hotLabel} alt="hot-label" className="hot-label" />}
             </div>
             <div className="information-product" onClick={handleViewDetail}>
                 <div className="name-product-wrapper">
@@ -200,7 +201,7 @@ const LatestProductItem: React.FunctionComponent<ILatestProductItemProps> = (pro
                         (data.price_product * data.sale) / 100
                     ).toFixed(2)}`}</p>
                 )}
-                <p className={data.sale ? 'price-product' : 'price-normal'}>{`$ ${data.price_product.toFixed(2)}`}</p>
+                <p className={data.sale ? 'price-product' : 'price-normal'}>{`$ ${data?.price_product}`}</p>
             </div>
         </Wrapper>
     );

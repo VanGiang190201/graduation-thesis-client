@@ -128,7 +128,9 @@ export const TopContentWrapper = styled.div`
         border-radius: 0.3rem;
         transition: 0.3s linear;
     }
-
+    .ant-image {
+        height: 100%;
+    }
     .bg-image {
         width: 100%;
         height: 100%;
