@@ -19,6 +19,16 @@ export const getProductsOfPortfolios = async (id: number) => {
     }
 };
 
+export const getProductsOfCategory = async (id: number) => {
+    const path = `./products?category_id=${id}`;
+    try {
+        const res = await httpRequest.get(path);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const getProductById = async (id: number) => {
     const path = `/products/${id}`;
     try {

@@ -11,6 +11,8 @@ import { Text } from '../Text';
 import { useAppSelector, useAppDisPatch } from '../../reudux/hook';
 import { addProductToWishList, deleteProductToWishList } from '../../reudux/feature/wishListSlide';
 import * as wishListRequest from '../../api/wishListApi';
+import config from '../../config';
+import { addCart } from '../../reudux/feature/cartSlide';
 interface IFeatureProductItemProps {
     data: IProduct;
 }
@@ -36,30 +38,22 @@ const FeatureProductItem: React.FunctionComponent<IFeatureProductItemProps> = (p
     };
 
     React.useEffect(() => {
-        for (let i = 0; i < wishList?.length; i++) {
-            let wishListItem: IWishListItem = wishList[i];
-            if (wishListItem.product_id == data.id) {
-                setIsLight(true);
-            }
-        }
-    }, [wishList?.length]);
-    //add product to wishlist
+        wishListRequest.isItemWishList(data.id).then((res) => setIsLight(res.isWishList));
+    }, []);
+    //update product to wishlist
 
-    const handleAddWishList = () => {
+    const handleUpdateWishList = () => {
         if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishListByUserId(currentUser.id).then((res) => {
-                dispatch(
-                    addProductToWishList({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        wishlist: [
-                            ...res[0].wishlist,
-                            {
-                                product_id: data.id,
-                            },
-                        ],
-                    }),
-                );
+            wishListRequest.updateWishList(data.id).then((res) => {
+                setIsLight(res.isWishList);
+                toast.success(res.message, {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
         } else {
             toast.info('Please ! Login to add wish list', {
@@ -73,30 +67,36 @@ const FeatureProductItem: React.FunctionComponent<IFeatureProductItemProps> = (p
         }
     };
 
-    //remove product to wishlist
-
-    const deleteWishList = () => {
-        const newWishList: any = [];
-        for (let i = 0; i < wishList.length; i++) {
-            const wishListItem: any = wishList[i];
-            if (wishListItem.product_id !== data.id) {
-                newWishList.push(wishListItem);
-            }
-        }
-        return newWishList;
-    };
-    const handleRemoveWishList = () => {
-        setIsLight(false);
+    const handleAddCart = () => {
         if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishListByUserId(currentUser.id).then((res) => {
-                dispatch(
-                    deleteProductToWishList({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        wishlist: [...deleteWishList()],
+            dispatch(addCart({ selected_code_product: '', number: 1, product_id: data.id }))
+                .unwrap()
+                .then((res) => {
+                    toast.success(<div onClick={() => navigate(config.cart)}>{res.message}</div>, {
+                        position: 'top-right',
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'dark',
+                    });
+                });
+        } else {
+            setTimeout(
+                () =>
+                    toast.info('Please ! Login to buy', {
+                        position: 'top-right',
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
                     }),
-                );
-            });
+                200,
+            );
+
+            setTimeout(() => navigate(config.login), 500);
         }
     };
     return (
@@ -108,26 +108,14 @@ const FeatureProductItem: React.FunctionComponent<IFeatureProductItemProps> = (p
                     className={`image ${levelRoom % 2 === 0 ? 'room' : ''}`}
                 />
                 <div className="active">
-                    <Button className="active-btn">
+                    <Button className="active-btn" onClick={handleAddCart}>
                         <CartIcon width="2rem" height="2rem" className="cart-icon" />
                     </Button>
-                    {isLight ? (
-                        <Button className="active-btn" onClick={handleRemoveWishList}>
-                            <HeartIcon
-                                width="2rem"
-                                height="2rem"
-                                className={`heart-icon ${isLight ? 'isLight' : ''}`}
-                            />
-                        </Button>
-                    ) : (
-                        <Button className="active-btn" onClick={handleAddWishList}>
-                            <HeartIcon
-                                width="2rem"
-                                height="2rem"
-                                className={`heart-icon ${isLight ? 'isLight' : ''}`}
-                            />
-                        </Button>
-                    )}
+
+                    <Button className="active-btn" onClick={handleUpdateWishList}>
+                        <HeartIcon width="2rem" height="2rem" className={`heart-icon ${isLight ? 'isLight' : ''}`} />
+                    </Button>
+
                     <Button className="active-btn" onClick={handleRoomImage}>
                         <SearchPlusIcon width="2rem" height="2rem" className="search-plus-icon" />
                     </Button>

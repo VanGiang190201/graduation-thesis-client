@@ -2,6 +2,9 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { DownOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Dropdown, message, Space } from 'antd';
 
 import NavbarWrapper from './Navbar.style';
 import Menu from './Menu';
@@ -25,6 +28,8 @@ import Image from '../../../Components/Image';
 import Button from '../../../Components/Button';
 import { authSlide } from '../../../reudux/feature/authSlide';
 import { Text } from '../../../Components/Text';
+import * as portfoliosRequest from '../../../api/portfoliosApi';
+import { IGetPortfolios } from '../../../Utils/interface';
 
 interface INavbarProps {}
 
@@ -32,6 +37,11 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
     const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
     const cart: any = useAppSelector((state) => state.persistedReducer.cart.listCart);
     const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
+    const [listPortfolios, setListPortfolios] = useState<IGetPortfolios[]>();
+
+    React.useEffect(() => {
+        portfoliosRequest.getListPortfolios().then((res) => setListPortfolios(res));
+    }, []);
     const dispatch = useAppDisPatch();
     const navigate = useNavigate();
     const handleToTopPage = () => {
@@ -68,6 +78,16 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
         );
     };
 
+    const onClick: MenuProps['onClick'] = ({ key }) => {
+        navigate(`/shop/${key}`, { state: key });
+    };
+
+    const items = listPortfolios?.map((portfolios) => {
+        return {
+            label: portfolios.name_portfolios,
+            key: portfolios.id,
+        };
+    });
     return (
         <NavbarWrapper>
             <div className="inner">
@@ -112,9 +132,15 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
                             Page
                             <PageIcon width="2.2rem" height="2.2rem" className="page-icon" />
                         </MenuItem>
-                        <MenuItem to={config.listProduct} className="menu-item">
-                            Product
-                            <ListProductIcon width="2.2rem" height="2.2rem" className="list-icon" />
+                        <MenuItem to="" className="menu-item">
+                            <Dropdown menu={{ items, onClick }}>
+                                <a onClick={(e) => e.preventDefault()}>
+                                    <Space>
+                                        Product
+                                        <ListProductIcon width="2.2rem" height="2.2rem" className="list-icon" />
+                                    </Space>
+                                </a>
+                            </Dropdown>
                         </MenuItem>
                         <MenuItem to="/blog" className="menu-item">
                             Blog

@@ -29,16 +29,16 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
     const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
     const dispatch = useAppDisPatch();
     const [currentImage, setCurrentImage] = React.useState<string>(data.image_product);
-    const [selectCodeImage, setSelectCodeImage] = React.useState<string>('DZ-XX');
+    const [selectCodeImage, setSelectCodeImage] = React.useState<string>();
     const [quantity, setQuantity] = React.useState<number>(1);
     const [isLight, setIsLight] = React.useState<boolean>(false);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [listOtherImage, setListOtherImage] = React.useState<IGetImage[]>([]);
     const [size, setSize] = React.useState<string>('L');
-    const salePrice = data?.price_product - (data?.price_product * data.sale) / 100;
 
     React.useEffect(() => {
         productRequest.getListImageProduct(data.id).then((res) => setListOtherImage(res));
+        wishListRequest.isItemWishList(data.id).then((res) => setIsLight(res.isWishList));
     }, [data.id]);
 
     const handleAddCart = () => {
@@ -110,7 +110,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
     //add product to wishlist
     const handleAddWishList = () => {
         if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishListByUserId(currentUser.id).then((res) => {
+            wishListRequest.getWishList().then((res) => {
                 dispatch(
                     addProductToWishList({
                         id: res[0].id,
@@ -150,7 +150,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
     const handleRemoveWishList = () => {
         setIsLight(false);
         if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishListByUserId(currentUser.id).then((res) => {
+            wishListRequest.getWishList().then((res) => {
                 dispatch(
                     deleteProductToWishList({
                         id: res[0].id,
@@ -161,8 +161,9 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
             });
         }
     };
-    const handleChangePrimaryImage = (image: string) => {
-        setCurrentImage(image);
+    const handleChangePrimaryImage = (item: IGetImage) => {
+        setCurrentImage(item.image_product);
+        setSelectCodeImage(item.code_id);
     };
     return (
         <TopContentWrapper>
@@ -174,7 +175,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                                 <div
                                     className={`child-image ${item.image_product == currentImage && 'isActive'}`}
                                     key={index}
-                                    onClick={() => handleChangePrimaryImage(item.image_product)}
+                                    onClick={() => handleChangePrimaryImage(item)}
                                 >
                                     <Image src={item.image_product} alt="" className="image" />
                                 </div>

@@ -21,6 +21,10 @@ export const Wrapper = styled.div`
         display: grid;
         grid-template-columns: 2fr 1fr 1fr 1fr;
     }
+    .title-header {
+        padding: 1.2rem 0;
+        border-bottom: 1px solid #d5d5d6;
+    }
     .title-item {
         font-size: 2rem;
         font-weight: 700;
@@ -85,16 +89,17 @@ export const Wrapper = styled.div`
         h2 {
             margin-bottom: 2.4rem;
         }
-        .btn-view-product {
+        .btn-view-home {
             height: 5rem;
             width: 14rem;
+            font-weight: 700;
             outline: none;
             border: none;
             font-size: 1.6rem;
             border-radius: 0.8rem;
             cursor: pointer;
         }
-        .btn-view-product:hover {
+        .btn-view-home:hover {
             background-color: var(--primary-background-color-hover-btn);
         }
     }

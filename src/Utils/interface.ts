@@ -8,6 +8,7 @@ export interface IProduct {
     price_product: number;
     rate: number;
     description_product: string;
+    category_id: number;
 }
 
 export interface IUser {
@@ -29,7 +30,31 @@ export interface IGetCart {
     number: number;
     color: string;
     size: string;
-    sub_total: number;
+    sale: number;
+    id: number;
+    selected_code_product: string;
+    rate: number;
+    price_product: number;
+    image_product: string;
+    category_id: number;
+    user_id: number;
+    description_product: string;
+    name_product: string;
+}
+
+export interface IGetWishList {
+    product_id: number;
+    color: string;
+    size: string;
+    sale: number;
+    id: number;
+    rate: number;
+    price_product: number;
+    image_product: string;
+    category_id: number;
+    user_id: number;
+    description_product: string;
+    name_product: string;
 }
 
 export interface IInformationBuy {
@@ -122,4 +147,12 @@ export interface IGetImage {
     id: number;
     image_product: string;
     product_id: number;
+    code_id: string;
+}
+
+export interface IGetCategory {
+    id: number;
+    category_id: number;
+    name_categories: string;
+    description_categories: string;
 }

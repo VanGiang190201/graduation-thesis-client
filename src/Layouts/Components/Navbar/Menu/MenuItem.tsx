@@ -11,6 +11,7 @@ interface IMenuItemProps {
 
 const NavLinkWrapper = styled.div`
     display: inline;
+    cursor: pointer;
     .active {
         color: var(--primary-background-color-btn) !important;
     }
@@ -29,9 +30,13 @@ const MenuItem: React.FunctionComponent<IMenuItemProps> = (props) => {
     const { to, end, children, className } = props;
     return (
         <NavLinkWrapper>
-            <NavLink to={to} end={end} className={(nav) => (nav.isActive ? `active ${className}` : `${className}`)}>
-                {children}
-            </NavLink>
+            {to ? (
+                <NavLink to={to} end={end} className={(nav) => (nav.isActive ? `active ${className}` : `${className}`)}>
+                    {children}
+                </NavLink>
+            ) : (
+                <span className={className}>{children}</span>
+            )}
         </NavLinkWrapper>
     );
 };

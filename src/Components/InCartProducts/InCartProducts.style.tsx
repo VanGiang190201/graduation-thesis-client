@@ -68,7 +68,7 @@ const Wrapper = styled.div`
         font-weight: 600;
     }
 
-    .size-product {
+    .code-product {
         font-size: 1.2rem;
         line-height: 1.4rem;
         color: #a1a8c1;

@@ -6,7 +6,40 @@ import { useNavigate } from 'react-router-dom';
 import ResultItem from '../SearchResult/ResultItem';
 import Button from '../../Components/Button';
 import config from '../../config';
+import { IGetWishList } from '../../Utils/interface';
+import * as wishListRequest from '../../api/wishListApi';
 interface IWishListProps {}
+
+const WishList: React.FunctionComponent<IWishListProps> = (props) => {
+    const [wishList, setWishList] = React.useState<IGetWishList[]>();
+    console.log(wishList);
+
+    React.useEffect(() => {
+        wishListRequest.getWishList().then((res) => setWishList(res));
+    }, []);
+    const navigate = useNavigate();
+    const handleRouteHome = () => {
+        navigate(config.home);
+    };
+    return (
+        <Wrapper>
+            <div className="container">
+                {wishList?.length ? (
+                    wishList?.map((item: any) => (
+                        <ResultItem key={item.product_id} id={item.product_id} setWishList={setWishList} />
+                    ))
+                ) : (
+                    <div className="blank">
+                        <h2>Let's Shopping! Your wish list is blank</h2>
+                        <Button className="btn-view-home" onClick={handleRouteHome}>
+                            HOME
+                        </Button>
+                    </div>
+                )}
+            </div>
+        </Wrapper>
+    );
+};
 
 const Wrapper = styled.div`
     width: 100%;
@@ -27,16 +60,17 @@ const Wrapper = styled.div`
         h2 {
             margin-bottom: 2.4rem;
         }
-        .btn-view-product {
+        .btn-view-home {
             height: 5rem;
             width: 14rem;
+            font-weight: 700;
             outline: none;
             border: none;
             font-size: 1.6rem;
             border-radius: 0.8rem;
             cursor: pointer;
         }
-        .btn-view-product:hover {
+        .btn-view-home:hover {
             background-color: var(--primary-background-color-hover-btn);
         }
     }
@@ -56,28 +90,4 @@ const Wrapper = styled.div`
         }
     }
 `;
-const WishList: React.FunctionComponent<IWishListProps> = (props) => {
-    const wishList = useAppSelector((state) => state.persistedReducer.wishList.listWish);
-    const navigate = useNavigate();
-    const handleRouteListProduct = () => {
-        navigate(config.listProduct);
-    };
-    return (
-        <Wrapper>
-            <div className="container">
-                {wishList?.length > 0 ? (
-                    wishList?.map((item: any) => <ResultItem key={item.product_id} id={item.product_id} />)
-                ) : (
-                    <div className="blank">
-                        <h2>Let's Shopping! Your wish list is blank</h2>
-                        <Button className="btn-view-product" onClick={handleRouteListProduct}>
-                            List Product
-                        </Button>
-                    </div>
-                )}
-            </div>
-        </Wrapper>
-    );
-};
-
 export default WishList;

@@ -5,9 +5,8 @@ import Button from '../Button';
 import { CancelIcon } from '../Icons';
 import Image from '../Image';
 import Wrapper from './InCartProducts.style';
-import { IGetCart } from '../../Utils/interface';
-import * as productRequest from '../../api/productApi';
-import * as cartRequest from '../../api/cartApi';
+import { IGetCart, IGetImage } from '../../Utils/interface';
+import * as imageRequest from '../../api/imageApi';
 import { deleteCart, updateQuantityCart } from '../../reudux/feature/cartSlide';
 import { useAppDisPatch, useAppSelector } from '../../reudux/hook';
 import { cartSlide } from '../../reudux/feature/cartSlide';
@@ -16,125 +15,49 @@ import { toast } from 'react-toastify';
 interface IInCartProductsProps {
     data: IGetCart;
     payment?: boolean;
+    setIsChangeMoney?: any;
+    setListProductCart?: any;
+    isChangeMoney?: boolean;
 }
 
 const InCartProducts: React.FunctionComponent<IInCartProductsProps> = (props) => {
-    const { data, payment } = props;
+    const { data, payment, setIsChangeMoney, isChangeMoney, setListProductCart } = props;
     const [quantity, setQuantity] = useState<number>(data.number);
     const [isChange, setIsChange] = useState<boolean>(true);
-    const [product, setProduct] = useState<any>({});
+    const [selectedImage, setSelectedImage] = useState<IGetImage>();
     const dispatch = useAppDisPatch();
-    const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
-    const cart: any = useAppSelector((state) => state.persistedReducer.cart.listCart);
-    const isChangeMoney: boolean = useAppSelector((state) => state.persistedReducer.cart.isChangeMoney);
-    //handle update quantity product in cart
+    // const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
+    // const cart: any = useAppSelector((state) => state.persistedReducer.cart.listCart);
+    // const isChangeMoney: boolean = useAppSelector((state) => state.persistedReducer.cart.isChangeMoney);
 
-    const handleUpdateQuantityIncrement = () => {
-        let newCart: any = [];
-        let newProductUpdate = {};
-        for (let i = 0; i < cart.length; i++) {
-            const cartItem: any = cart[i];
-            if (cartItem.product_id === data.product_id) {
-                newProductUpdate = {
-                    product_id: cartItem.product_id,
-                    amount: quantity + 1,
-                    color: cartItem.color,
-                    size: cartItem.size,
-                    sub_total:
-                        Math.round(product?.price_product - (product?.price_product * product?.sale) / 100) *
-                        (quantity + 1),
-                };
-                newCart.push(newProductUpdate);
-            }
-            if (cartItem.product_id !== data.product_id) {
-                newCart.push(cartItem);
-            }
-        }
-
-        return newCart;
-    };
-
-    const handleUpdateQuantityDecrement = () => {
-        let newCart: any = [];
-        let newProductUpdate = {};
-        for (let i = 0; i < cart.length; i++) {
-            const cartItem: any = cart[i];
-            if (cartItem.product_id === data.product_id) {
-                newProductUpdate = {
-                    product_id: cartItem.product_id,
-                    amount: quantity - 1,
-                    color: cartItem.color,
-                    size: cartItem.size,
-                    sub_total:
-                        Math.round(product?.price_product - (product?.price_product * product.sale) / 100) *
-                        (quantity - 1),
-                };
-                newCart.push(newProductUpdate);
-            }
-            if (cartItem.product_id !== data.product_id) {
-                newCart.push(cartItem);
-            }
-        }
-
-        return newCart;
-    };
-
-    //
     React.useEffect(() => {
-        productRequest.getProductById(data.product_id).then((res) => {
-            setProduct(res[0]);
-            setQuantity(data.number);
-        });
-    }, [data.number]);
+        imageRequest.getImageByCodeID(data.selected_code_product).then((res) => setSelectedImage(res[0]));
+    }, [isChangeMoney]);
     //Handle delete product in cart
-    const deleteProduct = () => {
-        const newCart: any = [];
-        for (let i = 0; i < cart.length; i++) {
-            const cartItem: any = cart[i];
-            if (cartItem.product_id !== data.product_id) {
-                newCart.push(cartItem);
-            }
-        }
-        return newCart;
-    };
+    console.log(selectedImage);
 
     const handleCancelCartProduct = () => {
-        cartRequest.getListCart().then((res) =>
-            dispatch(
-                deleteCart({
-                    id: res[0].id,
-                    user_id: currentUser.id,
-                    cart: [...deleteProduct()],
-                }),
-            )
-                .unwrap()
-                .then((data) => {
-                    toast.success('Remove product susses ✔', {
-                        position: 'top-right',
-                        autoClose: 1000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'dark',
-                    });
-                }),
-        );
+        dispatch(deleteCart(data.id))
+            .unwrap()
+            .then((res) => {
+                setIsChangeMoney(!isChangeMoney);
+                setListProductCart(res.list_cart);
+                toast.success(res.message, {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'dark',
+                });
+            });
     };
     const incrementQuantity = () => {
         setQuantity((prev) => prev + 1);
         setIsChange(!isChange);
-        dispatch(cartSlide.actions.setIsChangeMoney(!isChangeMoney));
-
-        cartRequest.getListCart().then((res) => {
-            dispatch(
-                updateQuantityCart({
-                    id: res[0].id,
-                    user_id: currentUser.id,
-                    cart: [...handleUpdateQuantityIncrement()],
-                }),
-            );
-        });
+        setIsChangeMoney(!isChangeMoney);
+        dispatch(updateQuantityCart({ id: data.id, number: { number: quantity + 1 } }));
     };
 
     const decrementQuantity = () => {
@@ -142,15 +65,8 @@ const InCartProducts: React.FunctionComponent<IInCartProductsProps> = (props) =>
             setQuantity((prev) => prev - 1);
             setIsChange(!isChange);
             dispatch(cartSlide.actions.setIsChangeMoney(!isChangeMoney));
-            cartRequest.getListCart().then((res) => {
-                dispatch(
-                    updateQuantityCart({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        cart: [...handleUpdateQuantityDecrement()],
-                    }),
-                );
-            });
+            setIsChangeMoney(!isChangeMoney);
+            dispatch(updateQuantityCart({ id: data.id, number: { number: quantity - 1 } }));
         }
     };
     return (
@@ -158,23 +74,29 @@ const InCartProducts: React.FunctionComponent<IInCartProductsProps> = (props) =>
             <div className={`container-product ${payment && 'payment'}`}>
                 <div className="product ">
                     <div className="left-content">
-                        <Image src={product?.image_product} alt="" className="image" />
+                        <Image
+                            src={data.selected_code_product ? selectedImage?.image_product : data.image_product}
+                            alt=""
+                            className="image"
+                        />
                         <Button className="cancel-btn" onClick={handleCancelCartProduct}>
                             <CancelIcon width="1.2rem" height="1.2rem" className="cancel-icon" />
                         </Button>
                     </div>
                     <div className="right-content">
                         <Text textOfLine={2} className="name-product">
-                            {product?.name_product}
+                            {data?.name_product}
                         </Text>
-                        <p className="color-product">Color : {data?.color}</p>
-                        <p className="size-product">Size : {data?.size}</p>
+
+                        <p className="code-product">
+                            Code : {data.selected_code_product ? data.selected_code_product : 'Default'}
+                        </p>
                     </div>
                 </div>
                 <p className="price">{`$ ${
-                    product?.sale
-                        ? (product?.price_product - (product?.price_product * product.sale) / 100)?.toFixed(2)
-                        : product?.price_product?.toFixed(2)
+                    data?.sale
+                        ? (data?.price_product - (data?.price_product * data.sale) / 100)?.toFixed(2)
+                        : data?.price_product?.toFixed(2)
                 }`}</p>
                 {!payment && (
                     <div className="quantity">
@@ -195,9 +117,7 @@ const InCartProducts: React.FunctionComponent<IInCartProductsProps> = (props) =>
                 {!payment && (
                     <p className="total-price">
                         ‎£
-                        {((product?.price_product - (product?.price_product * product?.sale) / 100) * quantity).toFixed(
-                            2,
-                        )}
+                        {((data?.price_product - (data?.price_product * data?.sale) / 100) * quantity).toFixed(2)}
                     </p>
                 )}
             </div>

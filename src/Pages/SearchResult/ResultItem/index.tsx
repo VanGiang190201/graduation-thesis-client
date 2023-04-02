@@ -19,10 +19,11 @@ import config from '../../../config';
 
 interface IResultItemProps {
     id: number;
+    setWishList?: any;
 }
 
 const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
-    const { id } = props;
+    const { id, setWishList } = props;
     const [levelRoom, setLevelRoom] = React.useState<number>(1);
     const [product, setProduct] = React.useState<any>();
     const navigate = useNavigate();
@@ -30,52 +31,34 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
     const cart = useAppSelector((state) => state.persistedReducer.cart.listCart);
     const [isLight, setIsLight] = React.useState<boolean>(false);
     const wishList = useAppSelector((state) => state.persistedReducer.wishList.listWish);
-    const salePrice = product?.price_product - (product?.price_product * product?.sale) / 100;
     const dispatch = useAppDisPatch();
 
     React.useEffect(() => {
         productRequest.getProductById(id).then((res: any) => {
             setProduct(res[0]);
         });
+        wishListRequest.isItemWishList(id).then((res) => setIsLight(res.isWishList));
     }, []);
     const handleAddCart = () => {
-        cartRequest.getListCartByUserId(currentUser.id).then((res) =>
-            dispatch(
-                addCart({
-                    id: res[0].id,
-                    user_id: currentUser.id,
-                    cart: [
-                        ...res[0].cart,
-                        {
-                            product_id: product.id,
-                            amount: 1,
-                            color: 'Black',
-                            size: 'XL',
-                            sub_total: salePrice * 1,
-                        },
-                    ],
-                }),
-            )
-                .unwrap()
-                .then((data) => {
-                    toast.success(<div onClick={() => navigate(config.cart)}>Add cart susses ✔</div>, {
-                        position: 'top-right',
-                        autoClose: 1000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: 'dark',
-                    });
-                }),
-        );
-        // setTimeout(() => navigate(config.cart), 1200);
+        dispatch(addCart({ selected_code_product: '', number: 1, product_id: id }))
+            .unwrap()
+            .then((res) => {
+                toast.success(<div onClick={() => navigate(config.cart)}>{res.message}</div>, {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'dark',
+                });
+            });
     };
     const handleRoomIn = () => {
         setLevelRoom((prev) => prev + 1);
     };
     const handleViewDetail = () => {
-        navigate(`/product-detail/${product.id}`, { state: product.id });
+        navigate(`/products/${product.id}`, { state: product.id });
     };
     const showRateStar = () => {
         let listStar = [];
@@ -93,31 +76,19 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
         return listUnRate;
     };
 
-    React.useEffect(() => {
-        for (let i = 0; i < wishList?.length; i++) {
-            let wishListItem: IWishListItem = wishList[i];
-            if (wishListItem.product_id == id) {
-                setIsLight(true);
-            }
-        }
-    }, [wishList?.length]);
-    //add product to wishlist
-
-    const handleAddWishList = () => {
+    const handleUpdateWishList = () => {
         if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishListByUserId(currentUser.id).then((res) => {
-                dispatch(
-                    addProductToWishList({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        wishlist: [
-                            ...wishList,
-                            {
-                                product_id: product.id,
-                            },
-                        ],
-                    }),
-                );
+            wishListRequest.updateWishList(id).then((res) => {
+                setIsLight(res.isWishList);
+                setWishList(res.wish_list);
+                toast.success(res.message, {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
         } else {
             toast.info('Please ! Login to add wish list', {
@@ -127,33 +98,6 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
                 closeOnClick: true,
                 draggable: true,
                 progress: undefined,
-            });
-        }
-    };
-
-    //remove product to wishlist
-
-    const deleteWishList = () => {
-        const newWishList: any = [];
-        for (let i = 0; i < wishList.length; i++) {
-            const wishListItem: any = wishList[i];
-            if (wishListItem.product_id !== product.id) {
-                newWishList.push(wishListItem);
-            }
-        }
-        return newWishList;
-    };
-    const handleRemoveWishList = () => {
-        setIsLight(false);
-        if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishListByUserId(currentUser.id).then((res) => {
-                dispatch(
-                    deleteProductToWishList({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        wishlist: [...deleteWishList()],
-                    }),
-                );
             });
         }
     };
@@ -182,7 +126,7 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
                     <p className="sale-price">
                         $ {(product?.price_product - (product?.sale * product?.price_product) / 100).toFixed(2)}
                     </p>
-                    <p className="normal-price">$ {product?.price_product?.toFixed(2)}</p>
+                    <p className="normal-price">$ {product?.price_product}</p>
                     <div className="star">
                         {showRateStar().map((star: number) => (
                             <StarIcon width="1.6rem" height="1.6rem" className="star-light" key={star} />
@@ -200,23 +144,10 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
                     <Button className="active-btn" onClick={handleAddCart}>
                         <CartIcon width="1.8rem" height="1.8rem" className="cart-icon" />
                     </Button>
-                    {isLight ? (
-                        <Button className="active-btn" onClick={handleRemoveWishList}>
-                            <HeartIcon
-                                width="2rem"
-                                height="2rem"
-                                className={`heart-icon ${isLight ? 'isLight' : ''}`}
-                            />
-                        </Button>
-                    ) : (
-                        <Button className="active-btn" onClick={handleAddWishList}>
-                            <HeartIcon
-                                width="2rem"
-                                height="2rem"
-                                className={`heart-icon ${isLight ? 'isLight' : ''}`}
-                            />
-                        </Button>
-                    )}
+
+                    <Button className="active-btn" onClick={handleUpdateWishList}>
+                        <HeartIcon width="2rem" height="2rem" className={`heart-icon ${isLight ? 'isLight' : ''}`} />
+                    </Button>
                     <Button className="active-btn" onClick={handleRoomIn}>
                         <SearchPlusIcon width="1.8rem" height="1.8rem" className="search-plus-icon" />
                     </Button>

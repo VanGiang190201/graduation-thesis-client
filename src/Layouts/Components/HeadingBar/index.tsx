@@ -15,7 +15,7 @@ const HeadingBar: React.FunctionComponent<IHeadingBarProps> = (props) => {
     const [titlePage, setTitlePage] = useState<string>('');
     useEffect(() => {
         if (pathname == '/login') setTitlePage('My Account');
-        else if (pathname == '/list-product') setTitlePage('List Product');
+        else if (pathname == `/shop/${location.state}`) setTitlePage('List Product');
         else if (pathname == `/product-detail/${location.state}`) setTitlePage('Product Detail');
         else if (pathname == '/about-us') setTitlePage('About Us');
         else if (pathname == '/order-completed') setTitlePage('Order Completed');

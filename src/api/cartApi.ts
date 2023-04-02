@@ -18,18 +18,18 @@ export const addCart = async (data: object) => {
     }
 };
 
-export const deleteCart = async (data: object, cartId: string) => {
+export const deleteCart = async (id: number) => {
     try {
-        const res = await httpRequest.put(`/cart/${cartId}`, data);
+        const res = await httpRequest.deleteApi(`/cart/${id}`);
         return res;
     } catch (error) {
         console.log(error);
     }
 };
 
-export const updateCart = async (data: object, cartId: string) => {
+export const updateQuantityCart = async (data: object, id: string) => {
     try {
-        const res = await httpRequest.put(`/carts/${cartId}`, data);
+        const res = await httpRequest.post(`/cart/${id}`, data);
         return res;
     } catch (error) {
         console.log(error);

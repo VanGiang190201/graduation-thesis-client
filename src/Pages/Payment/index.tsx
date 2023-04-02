@@ -12,7 +12,7 @@ import PayTotals from '../../Components/PayTotals';
 import config from '../../config';
 import { cartSlide, deleteCart } from '../../reudux/feature/cartSlide';
 import { useAppDisPatch, useAppSelector } from '../../reudux/hook';
-import { ICart, IFormInput } from '../../Utils/interface';
+import { IFormInput, IGetCart } from '../../Utils/interface';
 import { schema_payment } from '../../validation';
 import InformationForm from './InformationForm';
 import Wrapper from './Payment.style';
@@ -24,7 +24,8 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
     const cart: any = useAppSelector((state) => state.persistedReducer.cart.listCart);
     const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
     const tokenNotification = useAppSelector((state) => state.persistedReducer.notification.tokenNotification);
-    const [listProductCart, setListProductCart] = useState<ICart[]>(cart);
+    const [listProductCart, setListProductCart] = useState<IGetCart[]>(cart);
+    const [totalPay, setTotalPay] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isLoadingPayment, setIsLoadingPayment] = useState<boolean>(false);
     const dispatch = useAppDisPatch();
@@ -38,10 +39,11 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
         resolver: yupResolver(schema_payment),
     });
     useEffect(() => {
-        if (Object.keys(currentUser).length > 0) {
+        cartRequest.getListCart().then((res) => {
             setIsLoading(false);
-            setListProductCart(cart);
-        }
+            setListProductCart(res.list_cart);
+            setTotalPay(res.total_pay);
+        });
     }, [cart?.length]);
     const handleSubmitFormText = (data: any) => {
         dispatch(
@@ -50,22 +52,22 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
                 order: listProductCart,
             }),
         );
-        cartRequest.getListCartByUserId(currentUser.id).then((res) => {
-            setIsLoadingPayment(true);
-            dispatch(
-                deleteCart({
-                    id: res[0].id,
-                    user_id: currentUser.id,
-                    cart: [],
-                }),
-            )
-                .unwrap()
-                .then((data) => {
-                    setIsLoadingPayment(false);
-                    setTimeout(() => navigate(config.orderCompleted, { replace: true }));
-                    setTimeout(() => handleTest(), 3000);
-                });
-        });
+        // cartRequest.getListCart().then((res) => {
+        //     setIsLoadingPayment(true);
+        //     dispatch(
+        //         deleteCart({
+        //             id: res[0].id,
+        //             user_id: currentUser.id,
+        //             cart: [],
+        //         }),
+        //     )
+        //         .unwrap()
+        //         .then((data) => {
+        //             setIsLoadingPayment(false);
+        //             setTimeout(() => navigate(config.orderCompleted, { replace: true }));
+        //             setTimeout(() => handleTest(), 3000);
+        //         });
+        // });
     };
     const handleRouteListProduct = () => {
         navigate(config.listProduct);
@@ -106,13 +108,14 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
                 {cart?.length > 0 && (
                     <div className="pay-detail">
                         <div className="list-product">
-                            {listProductCart.map((item: ICart, index) => (
+                            {listProductCart.map((item: IGetCart, index) => (
                                 <InCartProducts key={index} data={item} payment />
                             ))}
                         </div>
                         <div className="pay-total">
                             <div className="detail-totals">
                                 <PayTotals
+                                    total={totalPay}
                                     payment
                                     listProductCart={listProductCart}
                                     handleForm={handleSubmit(handleSubmitFormText)}
@@ -120,6 +123,7 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
                                 />
                             </div>
                         </div>
+                        3
                     </div>
                 )}
             </div>

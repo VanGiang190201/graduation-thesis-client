@@ -64,10 +64,9 @@ export const addCart = createAsyncThunk('cart/add-new', async (data: object, thu
     }
 });
 
-export const deleteCart = createAsyncThunk('cart/detelecart', async (data: object, thunkAPI) => {
+export const deleteCart = createAsyncThunk('cart/detelecart', async (id: number, thunkAPI) => {
     try {
-        const { id, ...cartUser }: any = data;
-        const res = await cartRequest.deleteCart(cartUser, id);
+        const res = await cartRequest.deleteCart(id);
         return res;
     } catch (error) {
         thunkAPI.rejectWithValue(error);
@@ -76,8 +75,8 @@ export const deleteCart = createAsyncThunk('cart/detelecart', async (data: objec
 
 export const updateQuantityCart = createAsyncThunk('cart/updatecart', async (data: object, thunkAPI) => {
     try {
-        const { id, ...cartUser }: any = data;
-        const res = await cartRequest.updateCart(cartUser, id);
+        const { id, number }: any = data;
+        const res = await cartRequest.updateQuantityCart(number, id);
         return res.data;
     } catch (error) {
         thunkAPI.rejectWithValue(error);

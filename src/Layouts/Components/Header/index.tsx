@@ -35,6 +35,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
     const [listProductCart, setListProductCart] = React.useState<IGetCart[]>([]);
     const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
     const wishList = useAppSelector((state) => state.persistedReducer.wishList.listWish);
+    const cartList = useAppSelector((state) => state.persistedReducer.cart.listCart);
     const notificationList = useAppSelector((state) => state.persistedReducer.notification.listNotification);
     const notificationNotRead = notificationList?.filter((notification) => notification.isReading === false);
     const navigate = useNavigate();
@@ -42,10 +43,10 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
     React.useEffect(() => {
         if (Object.keys(currentUser).length > 0) {
             cartRequest.getListCart().then((res) => {
-                setListProductCart(res);
+                setListProductCart(res?.list_cart);
             });
         }
-    }, []);
+    }, [cartList?.length]);
     const handleLogout = () => {
         const auth = getAuth();
         signOut(auth)
