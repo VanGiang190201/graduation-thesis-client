@@ -1,17 +1,19 @@
-
-import config from "../config"
-import Home from "../Pages/Home"
-import ProductDetail from "../Pages/ProductDetail"
-import SearchResult from "../Pages/SearchResult"
-import OrderCompleted from "../Pages/OrderCompleted"
-import Payment from "../Pages/Payment"
-import Cart from "../Pages/Cart"
-import AboutUs from "../Pages/AboutUs"
-import NotFound from "../Pages/NotFound"
-import Login from "../Pages/Login"
-import ListProduct from "../Pages/ListProduct"
-import Register from "../Pages/Register"
-import WishList from "../Pages/WishList"
+import config from '../config';
+import Home from '../Pages/Home';
+import ProductDetail from '../Pages/ProductDetail';
+import SearchResult from '../Pages/SearchResult';
+import OrderCompleted from '../Pages/OrderCompleted';
+import Payment from '../Pages/Payment';
+import Cart from '../Pages/Cart';
+import AboutUs from '../Pages/AboutUs';
+import NotFound from '../Pages/NotFound';
+import Login from '../Pages/Login';
+import ListProduct from '../Pages/ListProduct';
+import Register from '../Pages/Register';
+import WishList from '../Pages/WishList';
+import Blog from '../Pages/Blog';
+import BookView from '../Pages/BookView';
+import Order from '../Pages/Order';
 
 export const publicRoutes = [
     {
@@ -24,22 +26,34 @@ export const publicRoutes = [
     },
     {
         path: config.productDetail,
-        component: ProductDetail
+        component: ProductDetail,
     },
 
     {
         path: config.aboutUs,
-        component: AboutUs
+        component: AboutUs,
     },
     {
         path: config.notFound,
-        component: NotFound
+        component: NotFound,
     },
     {
         path: config.listProduct,
-        component: ListProduct
-    }
-]
+        component: ListProduct,
+    },
+    {
+        path: config.blog,
+        component: Blog,
+    },
+    {
+        path: config.bookView,
+        component: BookView,
+    },
+    {
+        path: config.order,
+        component: Order,
+    },
+];
 
 export const privateRoutes = [
     {
@@ -52,37 +66,50 @@ export const privateRoutes = [
     },
     {
         path: config.productDetail,
-        component: ProductDetail
+        component: ProductDetail,
     },
 
     {
         path: config.aboutUs,
-        component: AboutUs
+        component: AboutUs,
+    },
+    {
+        path: config.blog,
+        component: Blog,
     },
     {
         path: config.notFound,
-        component: NotFound
+        component: NotFound,
     },
     {
         path: config.listProduct,
-        component: ListProduct
+        component: ListProduct,
     },
     {
         path: config.cart,
-        component: Cart
+        component: Cart,
     },
     {
         path: config.payment,
-        component: Payment
+        component: Payment,
     },
     {
         path: config.orderCompleted,
-        component: OrderCompleted
-    }, {
+        component: OrderCompleted,
+    },
+    {
         path: config.wishList,
-        component: WishList
-    }
-]
+        component: WishList,
+    },
+    {
+        path: config.bookView,
+        component: BookView,
+    },
+    {
+        path: config.order,
+        component: Order,
+    },
+];
 
 export const BlockRoute = [
     {
@@ -92,7 +119,5 @@ export const BlockRoute = [
     {
         path: config.register,
         component: Register,
-    }
-]
-
-
+    },
+];

@@ -110,7 +110,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
                         ) : (
                             <Link to={config.login} className="login-item">
                                 <div>
-                                    <p className="login-title">Login</p>
+                                    <p className="login-title">Đăng nhập</p>
                                 </div>
                             </Link>
                         )}
@@ -125,39 +125,39 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
                     </div>
                     <Menu className="list-menu">
                         <MenuItem to={config.home} className="menu-item">
-                            Home
+                            Trang chủ
                             <HomeIcon width="2.2rem" height="2.2rem" className="page-icon" />
                         </MenuItem>
-                        <MenuItem to="/page" className="menu-item">
-                            Page
+                        <MenuItem to="/book-view" className="menu-item">
+                            Đặt lịch
                             <PageIcon width="2.2rem" height="2.2rem" className="page-icon" />
                         </MenuItem>
                         <MenuItem to="" className="menu-item">
                             <Dropdown menu={{ items, onClick }}>
                                 <a onClick={(e) => e.preventDefault()}>
                                     <Space>
-                                        Product
+                                        Sản phẩm
                                         <ListProductIcon width="2.2rem" height="2.2rem" className="list-icon" />
                                     </Space>
                                 </a>
                             </Dropdown>
                         </MenuItem>
                         <MenuItem to="/blog" className="menu-item">
-                            Blog
+                            Bài viết
                             <BlogIcon width="2.2rem" height="2.2rem" className="blog-icon" />
                         </MenuItem>
                         <MenuItem to={config.aboutUs} className="menu-item">
-                            About us
+                            Giới thiệu
                             <AboutIcon width="2.2rem" height="2.2rem" className="about-icon" />
                         </MenuItem>
                         <MenuItem to={config.wishList} className="wish-list-item">
-                            Wish list
+                            Yêu thích
                             <HeartIcon width="2.2rem" height="2.2rem" className="wish-list-icon" />
                         </MenuItem>
                     </Menu>
                     <Link to={config.cart} className="cart-menu">
                         <div>
-                            <p className="cart">Cart</p>
+                            <p className="cart">Giỏ hàng </p>
                             {cart?.length > 0 && Object.keys(currentUser).length > 0 && (
                                 <span className="quantity">({cart ? cart.length : 0})</span>
                             )}

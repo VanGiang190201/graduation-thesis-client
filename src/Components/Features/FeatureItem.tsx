@@ -5,14 +5,14 @@ import 'aos/dist/aos.css';
 import { FeatureItemWrapper } from './Features.style';
 import Image from '../Image';
 import { Text } from '../Text';
+import { FeaturesDataProps } from '../../Utils/interface';
 interface IFeatureItemProps {
-    srcImage: string;
-    titleFeature?: string;
-    descriptionFeature?: string;
+    data: FeaturesDataProps;
 }
 
 const FeatureItem: React.FunctionComponent<IFeatureItemProps> = (props) => {
-    const { srcImage, titleFeature, descriptionFeature } = props;
+    const { data } = props;
+
     React.useEffect(() => {
         AOS.init({
             duration: 1000,
@@ -23,13 +23,13 @@ const FeatureItem: React.FunctionComponent<IFeatureItemProps> = (props) => {
     return (
         <FeatureItemWrapper data-aos="fade-up">
             <div className="image-feature">
-                <Image src={srcImage} alt="image-feature" className="image" />
+                <Image src={data.image_feature} alt="image-feature" className="image" />
             </div>
             <Text textOfLine={2} className="title-feature">
-                {titleFeature}
+                {data.name_feature}
             </Text>
             <Text textOfLine={4} className="description-feature">
-                {descriptionFeature}
+                {data.description_feature}
             </Text>
         </FeatureItemWrapper>
     );

@@ -17,6 +17,7 @@ const Wrapper = styled.div`
         height: 100%;
         width: 31.3rem;
         overflow: hidden;
+        flex-shrink: 0;
     }
 
     .image {
@@ -78,7 +79,7 @@ const Wrapper = styled.div`
     }
 
     .normal-price {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         line-height: 1.8rem;
         text-decoration: line-through;
         color: var(--primary-background-color-btn);

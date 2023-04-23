@@ -107,22 +107,19 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
             }
         }
     }, [wishList?.length]);
-    //add product to wishlist
-    const handleAddWishList = () => {
+    //update product to wishlist
+    const handleUpdateWishList = () => {
         if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishList().then((res) => {
-                dispatch(
-                    addProductToWishList({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        wishlist: [
-                            ...res[0].wishlist,
-                            {
-                                product_id: data.id,
-                            },
-                        ],
-                    }),
-                );
+            wishListRequest.updateWishList(data.id).then((res) => {
+                setIsLight(res.isWishList);
+                toast.success(res.message, {
+                    position: 'top-right',
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
         } else {
             toast.info('Please ! Login to add wish list', {
@@ -135,32 +132,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
             });
         }
     };
-    //remove product from wishlist
 
-    const deleteWishList = () => {
-        const newWishList: any = [];
-        for (let i = 0; i < wishList.length; i++) {
-            const wishListItem: any = wishList[i];
-            if (wishListItem.product_id !== data.id) {
-                newWishList.push(wishListItem);
-            }
-        }
-        return newWishList;
-    };
-    const handleRemoveWishList = () => {
-        setIsLight(false);
-        if (Object.keys(currentUser).length > 0) {
-            wishListRequest.getWishList().then((res) => {
-                dispatch(
-                    deleteProductToWishList({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        wishlist: [...deleteWishList()],
-                    }),
-                );
-            });
-        }
-    };
     const handleChangePrimaryImage = (item: IGetImage) => {
         setCurrentImage(item.image_product);
         setSelectCodeImage(item.code_id);
@@ -201,8 +173,9 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                         }`}</p>
                         <p className="normal-price">{`$ ${data?.price_product}`}</p>
                     </div>
+
                     <Text textOfLine={3} className="description-product">
-                        {data?.description_product}
+                        <div dangerouslySetInnerHTML={{ __html: data?.description_product ?? '' }} />
                     </Text>
                     <div className="active">
                         <Button className="add-cart-btn" onClick={handleAddCart}>
@@ -212,23 +185,10 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                                 'Add To Cart'
                             )}
                         </Button>
-                        {isLight ? (
-                            <div onClick={handleRemoveWishList}>
-                                <HeartIcon
-                                    width="2rem"
-                                    height="2rem"
-                                    className={`heart-icon ${isLight && 'isLight'}`}
-                                />
-                            </div>
-                        ) : (
-                            <div onClick={handleAddWishList}>
-                                <HeartIcon
-                                    width="2rem"
-                                    height="2rem"
-                                    className={`heart-icon ${isLight && 'isLight'}`}
-                                />
-                            </div>
-                        )}
+
+                        <div onClick={handleUpdateWishList}>
+                            <HeartIcon width="2rem" height="2rem" className={`heart-icon ${isLight && 'isLight'}`} />
+                        </div>
                     </div>
                     <div className="quantity-wrapper">
                         <p className="title">Quantity</p>

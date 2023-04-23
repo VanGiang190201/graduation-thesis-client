@@ -12,6 +12,7 @@ import bannerImage from './banner-image.png';
 import lightImage from './light.png';
 import saleLabel from './viewsale.png';
 import trendingBanner from './HomeChair.png';
+import backgroundSliderImage from './background.png';
 
 import clientFirst from './clientfirst.jpg';
 import clientSecond from './clientsecond.jpg';
@@ -44,4 +45,5 @@ export {
     UserLogin,
     backGroundImageLogin,
     hotLabel,
+    backgroundSliderImage,
 };

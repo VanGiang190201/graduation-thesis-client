@@ -37,7 +37,7 @@ const Wrapper = styled.div`
     }
     input:focus {
     }
-    .email {
+    .phone {
         width: 100%;
         height: 5rem;
     }

@@ -155,4 +155,34 @@ export interface IGetCategory {
     category_id: number;
     name_categories: string;
     description_categories: string;
+    image: string;
+}
+
+export interface FeaturesDataProps {
+    id: number;
+    name_feature: string;
+    description_feature: string;
+    image_feature: string;
+    active: boolean;
+}
+
+export interface VideoDataProps {
+    id: number;
+    product_id: number;
+    media: string;
+    title: string;
+}
+
+export interface OrderProps {
+    id: number;
+    phone: string;
+    first_name: string;
+    last_name: string;
+    address: string;
+    apartment: string;
+    city: string;
+    user_id: number;
+    time_order: string;
+    status: number;
+    total_order: number;
 }

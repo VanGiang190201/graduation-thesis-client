@@ -502,121 +502,124 @@ export const TopContentWrapper = styled.div`
     }
 `;
 
-export const DescriptionProductWrapper = styled.div`
-    width: 100%;
-    background-color: #f9f8fe;
-    margin-top: 11.4rem;
-    padding: 10.9rem 0;
-    .wrapper {
-        width: 114rem;
-        margin: auto;
-    }
-    .tabs {
-        display: flex;
-    }
-    .tab-item {
-        font-size: 2.4rem;
-        line-height: 2.8rem;
-        font-weight: 600;
-        color: #151875;
-        margin-right: 8.5rem;
-    }
-    .panel {
-        margin-top: 6.1rem;
-    }
-    .panel-item {
-    }
-    .title {
-        font-size: 2.2rem;
-        line-height: 2.6rem;
-        font-weight: 600;
-        color: #151875;
-        margin-top: 3.6rem;
-    }
-    .description {
-        font-size: 1.6rem;
-        line-height: 2.9rem;
-        color: #a9acc6;
-        margin-top: 1.4rem;
-        span {
-            color: #000;
-        }
-    }
-    .more-details {
-    }
-
-    //laptop
-    @media (max-width: ${(p) => p.theme.breakPoints.breakLaptop}) {
+export const Style = {
+    DescriptionProductWrapper: styled.div`
+        width: 100%;
+        background-color: #f9f8fe;
+        margin-top: 11.4rem;
+        padding: 10.9rem 0;
         .wrapper {
-            width: 89rem;
+            width: 114rem;
             margin: auto;
         }
-    }
-
-    @media (max-width: ${(p) => p.theme.breakPoints.breakSmallDesktop}) {
-        .wrapper {
-            width: 100rem;
-            margin: auto;
-        }
-    }
-    //tablet
-    @media (max-width: ${(p) => p.theme.breakPoints.breakTablet}) {
-        margin-top: 8.4rem;
-        padding: 6.9rem 0;
-        .wrapper {
-            max-width: 100%;
-            margin: auto;
-            padding: 0 2rem;
-        }
-    }
-    @media (max-width: ${(p) => p.theme.breakPoints.breakMobile}) {
-        margin-top: 4rem;
-        padding: 3rem 0;
         .tabs {
             display: flex;
-            flex-wrap: nowrap;
-            overflow-y: hidden;
-            overflow-x: auto;
-        }
-        //scrollbar CSS
-        .tabs::-webkit-scrollbar {
-            border-radius: 0;
-            width: 4px;
-            height: 8px;
-        }
-
-        .tabs::-webkit-scrollbar-thumb {
-            border-radius: 4px;
-            background-color: transparent;
-        }
-        .tabs:hover::-webkit-scrollbar-thumb {
-            border-radius: 4px;
-            background-color: #ccc;
-        }
-
-        .tabs::-webkit-scrollbar-track {
-            border-radius: 0;
-            background-color: rgba(0, 0, 0, 0);
         }
         .tab-item {
-            font-size: 2.2rem;
-            line-height: 2.4rem;
+            font-size: 2.4rem;
+            line-height: 2.8rem;
             font-weight: 600;
             color: #151875;
-            flex-shrink: 0;
             margin-right: 8.5rem;
         }
         .panel {
-            margin-top: 2rem;
+            margin-top: 6.1rem;
+        }
+        .panel-item {
         }
         .title {
-            margin-top: 2rem;
+            font-size: 2.2rem;
+            line-height: 2.6rem;
+            font-weight: 600;
+            color: #151875;
+            margin-top: 3.6rem;
         }
         .description {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            line-height: 2.9rem;
+            color: #a9acc6;
+            margin-top: 1.4rem;
+            span {
+                color: #000;
+            }
         }
-    }
-`;
+        .more-details {
+        }
+
+        //laptop
+        @media (max-width: ${(p) => p.theme.breakPoints.breakLaptop}) {
+            .wrapper {
+                width: 89rem;
+                margin: auto;
+            }
+        }
+
+        @media (max-width: ${(p) => p.theme.breakPoints.breakSmallDesktop}) {
+            .wrapper {
+                width: 100rem;
+                margin: auto;
+            }
+        }
+        //tablet
+        @media (max-width: ${(p) => p.theme.breakPoints.breakTablet}) {
+            margin-top: 8.4rem;
+            padding: 6.9rem 0;
+            .wrapper {
+                max-width: 100%;
+                margin: auto;
+                padding: 0 2rem;
+            }
+        }
+        @media (max-width: ${(p) => p.theme.breakPoints.breakMobile}) {
+            margin-top: 4rem;
+            padding: 3rem 0;
+            .tabs {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-y: hidden;
+                overflow-x: auto;
+            }
+            //scrollbar CSS
+            .tabs::-webkit-scrollbar {
+                border-radius: 0;
+                width: 4px;
+                height: 8px;
+            }
+
+            .tabs::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background-color: transparent;
+            }
+            .tabs:hover::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background-color: #ccc;
+            }
+
+            .tabs::-webkit-scrollbar-track {
+                border-radius: 0;
+                background-color: rgba(0, 0, 0, 0);
+            }
+            .tab-item {
+                font-size: 2.2rem;
+                line-height: 2.4rem;
+                font-weight: 600;
+                color: #151875;
+                flex-shrink: 0;
+                margin-right: 8.5rem;
+            }
+            .panel {
+                margin-top: 2rem;
+            }
+            .title {
+                margin-top: 2rem;
+            }
+            .description {
+                font-size: 1.5rem;
+            }
+        }
+    `,
+    WrapperContent: styled.div``,
+};
 
 export const RelatedProductsWrapper = styled.div`
     width: 114rem;

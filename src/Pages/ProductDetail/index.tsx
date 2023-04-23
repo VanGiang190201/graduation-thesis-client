@@ -3,10 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import TopContent from './TopContent';
-import { RelatedProductsWrapper, Wrapper } from './ProductDetail.style';
+import { Wrapper } from './ProductDetail.style';
 import DescriptionProduct from './DescriptionProduct';
-import ListProduct from '../../Components/ListProduct';
-import TrendingProductItem from '../../Components/TrendingProductItem';
 import * as productRequest from '../../api/productApi';
 import Image from '../../Components/Image';
 import { logoImage } from '../../assets/images';
@@ -20,13 +18,13 @@ const ProductDetail: React.FunctionComponent<IProduct> = (props) => {
         id: 0,
         name_product: '',
         type: '',
-        sale: 1,
+        sale: 0,
         image_product: '',
-        price_product: 1,
-        rate: 1,
+        price_product: 0,
+        rate: 0,
         description_product: '',
+        category_id: 0,
     });
-    const [relatedProduct, setRelatedProduct] = useState<IProduct[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     console.log(detailProduct);
 
@@ -38,13 +36,6 @@ const ProductDetail: React.FunctionComponent<IProduct> = (props) => {
         });
     }, [location.state]);
 
-    useEffect(() => {
-        productRequest.getProducts().then((res) => {
-            const relatedProduct = res?.filter((item: IProduct) => item.type === 'Trending Products');
-            setRelatedProduct(relatedProduct);
-        });
-    }, []);
-
     return isLoading ? (
         <Loading />
     ) : (
@@ -53,15 +44,8 @@ const ProductDetail: React.FunctionComponent<IProduct> = (props) => {
                 <div className="container">
                     <TopContent data={detailProduct} />
 
-                    <DescriptionProduct />
+                    <DescriptionProduct data={detailProduct} />
                     {/* Reusing trending product item from home page */}
-                    <RelatedProductsWrapper>
-                        <ListProduct title="Related Products" related={true}>
-                            {relatedProduct.map((item, index) => (
-                                <TrendingProductItem data={item} key={index} related={true} />
-                            ))}
-                        </ListProduct>
-                    </RelatedProductsWrapper>
                     <div className="bottom-content">
                         <Image src={logoImage} alt="" className="image" />
                     </div>

@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Button from '../../../Components/Button';
 import Image from '../../../Components/Image';
-import { lightImage, bannerImage } from '../../../assets/images';
+import { lightImage } from '../../../assets/images';
 import { CarouselItemWrapper } from './Carousel.style';
 import { Text } from '../../../Components/Text';
 interface ICarouselItemProps {
@@ -31,7 +31,7 @@ const CarouselItem: React.FunctionComponent<ICarouselItemProps> = (props) => {
                     <Image src={lightImage} alt="" className="light-image" />
                 </div>
                 <div className="image-wrapper">
-                    <Image src={bannerImage} alt="" className="image-carousel" />
+                    <Image src={data.image_carousel} alt="" className="image-carousel" />
                 </div>
             </div>
         </CarouselItemWrapper>

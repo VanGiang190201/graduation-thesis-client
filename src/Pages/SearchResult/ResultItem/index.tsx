@@ -124,9 +124,9 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
                 </div>
                 <div className="second-information">
                     <p className="sale-price">
-                        $ {(product?.price_product - (product?.sale * product?.price_product) / 100).toFixed(2)}
+                        {product?.price_product - (product?.sale * product?.price_product) / 100} VNĐ
                     </p>
-                    <p className="normal-price">$ {product?.price_product}</p>
+                    <p className="normal-price">{product?.price_product} VNĐ</p>
                     <div className="star">
                         {showRateStar().map((star: number) => (
                             <StarIcon width="1.6rem" height="1.6rem" className="star-light" key={star} />
@@ -137,8 +137,8 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
                         ))}
                     </div>
                 </div>
-                <Text textOfLine={3} className="description">
-                    {product?.description_product}
+                <Text textOfLine={2} className="description">
+                    <div dangerouslySetInnerHTML={{ __html: product?.description_product ?? '' }} />
                 </Text>
                 <div className="active">
                     <Button className="active-btn" onClick={handleAddCart}>

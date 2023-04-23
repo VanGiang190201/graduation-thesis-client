@@ -5,6 +5,7 @@ import { addNewCart } from '../../api/cartApi';
 import { addNewNotificationUSer } from '../../api/notificationApi';
 import { addNewWishList } from '../../api/wishListApi';
 import { IUser } from '../../Utils/interface';
+import { setStoredAuth } from '../../Utils/helper/localStorage';
 
 interface IBody {
     email: string;
@@ -66,6 +67,7 @@ export const authSlide = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
+            setStoredAuth(action.payload.access_token);
             state.dataUser = { ...action.payload };
         });
 

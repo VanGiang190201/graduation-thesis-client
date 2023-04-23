@@ -62,7 +62,7 @@ const PayTotals: React.FunctionComponent<IPayTotalsProps> = (props) => {
                     className={`proceed-btn ${checked && listProductCart.length > 0 && total > 0 ? 'isChecked' : ''}`}
                     onClick={handleForm}
                 >
-                    Proceed To Checkout
+                    Confirm Order
                 </Button>
             ) : (
                 <Button

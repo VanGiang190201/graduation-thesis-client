@@ -39,7 +39,7 @@ export const NavBarWrapper = styled.div`
 
 export const HeadingBarWrapper = styled.div`
     width: 100%;
-    height: 20rem;
+    height: 14rem;
     margin-top: 13rem;
     //tablet
     @media (max-width: ${(p) => p.theme.breakPoints.breakTablet}) {

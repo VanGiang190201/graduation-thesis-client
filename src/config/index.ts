@@ -11,6 +11,9 @@ const config = {
     listProduct: '/shop/:portfolios_id',
     register: '/register',
     wishList: '/wishlist',
+    blog: '/blog',
+    bookView: '/book-view',
+    order: '/order',
 };
 
 export default config;

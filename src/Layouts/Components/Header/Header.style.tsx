@@ -192,11 +192,18 @@ export const Wrapper = styled.div`
             margin: 0 0.6rem 0.4rem 0;
             color: #ccc;
         }
-
+        .order {
+            display: flex;
+            padding: 0.4rem 0;
+            align-items: center;
+            cursor: pointer;
+        }
         .logout {
             display: flex;
             border-top: 1px solid #ccc;
             padding: 0.4rem 0;
+            align-items: center;
+            cursor: pointer;
         }
     }
     .logout-text {

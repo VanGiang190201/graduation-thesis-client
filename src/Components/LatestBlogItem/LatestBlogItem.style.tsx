@@ -3,16 +3,14 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
     width: 37rem;
     border-radius: 0.5rem;
-    box-shadow: 0px 8px 40px rgba(49, 32, 138, 0.05);
+    box-shadow: 0px 8px 20px rgba(49, 32, 138, 0.05);
+    border-bottom: 4px solid #eaeaea;
     background-color: #fff;
     overflow: hidden;
     cursor: pointer;
     margin-top: 1rem;
     scroll-snap-align: center;
-    margin-left: 1.5rem;
-    &:nth-child(3n + 1) {
-        margin-left: 0;
-    }
+    margin-right: 1.5rem;
     &:hover {
         .title-blog {
             color: var(--primary-background-color-btn);

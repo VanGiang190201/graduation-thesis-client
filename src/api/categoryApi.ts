@@ -10,6 +10,16 @@ export const getListCategory = async () => {
     }
 };
 
+export const getCategoryItem = async (id: number) => {
+    const path = `/category/${id}`;
+    try {
+        const res = await httpRequest.get(path);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const getListCategoryByPortfolios = async (id: number) => {
     const path = `/category?portfolios_id=${id}`;
     try {

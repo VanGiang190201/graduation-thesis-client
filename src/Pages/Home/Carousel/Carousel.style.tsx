@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { backgroundSliderImage } from '../../../assets/images';
 
 export const Wrapper = styled.div`
     width: 98%;
@@ -94,6 +95,9 @@ export const CarouselItemWrapper = styled.div`
     }
 
     .image-wrapper {
+        background: url(${backgroundSliderImage});
+        background-size: 43rem;
+        background-repeat: no-repeat;
         width: 50rem;
         height: 42rem;
         margin-top: 13rem;
@@ -102,6 +106,8 @@ export const CarouselItemWrapper = styled.div`
     .image-carousel {
         width: 100%;
         height: 100%;
+        box-shadow: 10px 2px 4px #444;
+        clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 0 100%, 30% 80%, 0% 75%);
     }
     //responsive
     //tablet

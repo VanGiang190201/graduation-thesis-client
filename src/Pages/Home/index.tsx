@@ -15,48 +15,27 @@ import Image from '../../Components/Image';
 import LatestBlogItem from '../../Components/LatestBlogItem';
 import ListProduct from '../../Components/ListProduct';
 import Loading from '../../Components/Loading';
-import TrendingProductItem from '../../Components/TrendingProductItem';
 import { IBlogProps, IGetAdDetail, IGetPortfolios, IProduct, ISliderProps } from '../../Utils/interface';
 import BackgroundImage from './BackgroundImage/BackgroundImage';
 import Carousel from './Carousel';
 import Wrapper from './Home.style';
-import LatestProductItem from './LatestProductItem';
 import TrendingBanner from './TrendingBanner';
 import Advertisement from './Advertisement';
 import FeatureProduct from './FeatureProduct';
 import HotSaleProduct from './HotSaleProduct';
+import ListBlog from './ListBlog';
 
 interface IHomeProps {}
 
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
-    const [latestProducts, setLatestProducts] = useState<IProduct[]>([]);
-    const [trendingProducts, setTrendingProducts] = useState<IProduct[]>([]);
     const [sliders, setSliders] = useState<ISliderProps[]>([]);
-    const [blogs, setBlogs] = useState<IBlogProps[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [adIsUsed, setAdIsUsed] = useState<IGetAdDetail>();
     const [listPortfolios, setListPortfolios] = useState<IGetPortfolios[]>([]);
     useEffect(() => {
-        productRequest.getProducts().then((res) => {
-            setIsLoading(false);
-            const filterLatestProducts = res?.filter((item: IProduct) => item.type === 'Latest Products');
-            const filterTrendingProducts = res?.filter((item: IProduct) => item.type === 'Trending Products');
-            setLatestProducts(filterLatestProducts);
-            setTrendingProducts(filterTrendingProducts);
-        });
-    }, []);
-
-    useEffect(() => {
         slidersRequest.getSliders().then((res) => {
             setIsLoading(false);
             setSliders(res);
-        });
-    }, []);
-
-    useEffect(() => {
-        blogRequest.getBlogs().then((res) => {
-            setIsLoading(false);
-            setBlogs(res);
         });
     }, []);
 
@@ -89,28 +68,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                 <Advertisement data={adIsUsed} onClick={handleRoute} />
                 <FeatureProduct data={listPortfolios} />
                 <div className="wrapper-offer">
-                    <Features title="What Shopex Offer!">
-                        <FeatureItem
-                            srcImage={freeDeliveryImage}
-                            titleFeature="Free Delivery"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                        <FeatureItem
-                            srcImage={cashBackImage}
-                            titleFeature="100% Cash Back"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                        <FeatureItem
-                            srcImage={premiumQualityImage}
-                            titleFeature="Quality Product"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                        <FeatureItem
-                            srcImage={supportImage}
-                            titleFeature="24/7 Support"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                    </Features>
+                    <Features title="What Shopex Offer!" />
                 </div>
                 <div className="wrapper-trending-banner">
                     <TrendingBanner />
@@ -126,11 +84,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                 </div>
 
                 <div className="wrapper-blogs">
-                    <ListProduct title="Latest Blog">
-                        {blogs?.map((item: IBlogProps) => (
-                            <LatestBlogItem data={item} key={item.id} />
-                        ))}
-                    </ListProduct>
+                    <ListBlog />
                 </div>
             </div>
         </Wrapper>

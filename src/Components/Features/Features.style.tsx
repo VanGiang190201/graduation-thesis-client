@@ -2,10 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     margin-top: 8rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
+    text-align: center;
     padding: 0.4rem;
     border-bottom: 2px solid transparent;
     .title-features {
@@ -44,22 +42,28 @@ export const Wrapper = styled.div`
 
 export const FeatureItemWrapper = styled.div`
     width: 27rem;
+    height: 40rem;
     margin-top: 2rem;
     background-color: #fff;
     box-shadow: 0px 8px 40px rgba(49, 32, 138, 0.05);
     padding: 2.6rem 2.6rem 4.5rem;
     display: flex;
+    margin-left: 0.6rem;
     flex-direction: column;
     align-items: center;
     border-bottom: 2px solid transparent;
     .image-feature {
-        margin-top: 4rem;
+        height: 14rem;
+        width: 100%;
+        margin-top: 2rem;
+        overflow: hidden;
     }
 
     .image {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
     }
-
     .title-feature {
         font-size: 2.2rem;
         line-height: 2.4rem;

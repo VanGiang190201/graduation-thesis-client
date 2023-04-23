@@ -1,20 +1,18 @@
 import * as httpRequest from './apiClient';
-import { IBodyLogin } from "../Utils/interface";
-import { IBodyRegister } from "../Utils/interface";
+import { IBodyLogin } from '../Utils/interface';
+import { IBodyRegister } from '../Utils/interface';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-
-
 export const authenApi = {
     login: async (body: IBodyLogin) => {
-        const path: string = "/auth/login"
+        const path: string = '/auth/login';
         try {
             const res = await httpRequest.post(path, body);
             console.log(res);
             return res;
         } catch (error: any) {
-            toast.error(error.response.data.message ? error.response.data.message : "Error login ", {
+            toast.error(error.response.data.message ? error.response.data.message : 'Error login ', {
                 position: 'top-right',
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -36,13 +34,12 @@ export const authenApi = {
         // return currentUser;
     },
     register: async (body: IBodyRegister) => {
-        const path: string = "/users";
+        const path: string = '/users';
         try {
             const res = await httpRequest.post(path, body);
             return res;
+        } catch (error) {
+            console.log(error);
         }
-        catch (error) {
-            console.log(error)
-        }
-    }
-}
+    },
+};

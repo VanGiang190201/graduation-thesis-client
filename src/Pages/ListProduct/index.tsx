@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 
 import * as productRequest from '../../api/productApi';
-import * as categoryRequest from '../../api/categoryAPI';
+import * as categoryRequest from '../../api/categoryApi';
 import Loading from '../../Components/Loading';
 import { IGetCategory, IProduct } from '../../Utils/interface';
 import CategoryFilter from './CategoryFilter';
 import ItemRender from './ItemRender';
+import Image from '../../Components/Image';
 
 interface IListProductProps {}
 
@@ -19,9 +20,11 @@ const ListProduct: React.FunctionComponent<IListProductProps> = (props) => {
             category_id: 1,
             name_categories: '',
             description_categories: '',
+            image: '',
         },
     ]);
     const [currentCategory, setCurrentCateGory] = React.useState<number>(listCategory[0].id);
+    const [categoryItem, setCateGoryItem] = React.useState<IGetCategory>();
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const location = useLocation();
 
@@ -32,20 +35,28 @@ const ListProduct: React.FunctionComponent<IListProductProps> = (props) => {
 
     React.useEffect(() => {
         productRequest.getProductsOfCategory(currentCategory).then((res) => setListProduct(res));
+        categoryRequest.getCategoryItem(currentCategory).then((res) => setCateGoryItem(res));
     }, [currentCategory]);
 
-    console.log('Product', listProduct);
+    console.log('category', categoryItem);
     return isLoading ? (
         <Loading />
     ) : (
         <Style.Wrapper>
             <div className="container">
-                <Style.Filter>
-                    <CategoryFilter listCategory={listCategory} setCurrentCategory={setCurrentCateGory} />
-                </Style.Filter>
-                <Style.List>
-                    <ItemRender listProduct={listProduct} />
-                </Style.List>
+                {categoryItem?.image && (
+                    <Style.Banner>
+                        <Image src={categoryItem.image} alt={categoryItem.name_categories} className="banner" />
+                    </Style.Banner>
+                )}
+                <Style.Content>
+                    <Style.Filter>
+                        <CategoryFilter listCategory={listCategory} setCurrentCategory={setCurrentCateGory} />
+                    </Style.Filter>
+                    <Style.List>
+                        <ItemRender listProduct={listProduct} />
+                    </Style.List>
+                </Style.Content>
             </div>
         </Style.Wrapper>
     );
@@ -58,6 +69,7 @@ const Style = {
             max-width: 114rem;
             margin: 8rem auto;
             display: flex;
+            flex-direction: column;
             gap: 24px;
         }
         @media (max-width: ${(p) => p.theme.breakPoints.breakTablet}) {
@@ -78,6 +90,19 @@ const Style = {
     `,
     List: styled.div`
         flex: 5;
+    `,
+    Banner: styled.div`
+        height: 24rem;
+        overflow: hidden;
+        .banner {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    `,
+    Content: styled.div`
+        display: flex;
+        gap: 24px;
     `,
 };
 export default ListProduct;

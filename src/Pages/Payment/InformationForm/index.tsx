@@ -16,11 +16,11 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                     <label className="title">Contact Information</label>
                     <Input
                         type="text"
-                        className="email"
+                        className="phone"
                         label="Email or mobile phone number"
                         placeholder="&nbsp;"
                         register={register}
-                        rule="email"
+                        rule="phone"
                         errors={errors}
                         paymentPage
                     />
@@ -87,7 +87,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                         paymentPage
                     />
 
-                    <Input
+                    {/* <Input
                         type="text"
                         className="postal-code"
                         register={register}
@@ -96,7 +96,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                         label="Postal Code"
                         placeholder="&nbsp;"
                         paymentPage
-                    />
+                    /> */}
                 </div>
             </form>
         </Wrapper>

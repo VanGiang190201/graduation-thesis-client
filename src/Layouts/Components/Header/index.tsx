@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { signOut, getAuth } from 'firebase/auth';
 import HeadlessTippy from '@tippyjs/react/headless';
+import { FaShippingFast } from 'react-icons/fa';
 
 import { Wrapper } from './Header.style';
 import { useAppDisPatch } from '../../../reudux/hook';
@@ -72,11 +73,11 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                 <div className="contact-header">
                     <div className="mail-contact">
                         <MailIcon width="1.8rem" height="1.4rem" className="icon-header mail-icon" />
-                        <p className="text-header ">mhhasanul@gmail.com</p>
+                        <p className="text-header ">ngogiang190201@gmail.com</p>
                     </div>
                     <div className="phone-contact">
                         <PhoneIcon width="1.8rem" height="1.4rem" className="icon-header mail-icon" />
-                        <p className="text-header">(12345)67890</p>
+                        <p className="text-header">0868351902</p>
                     </div>
                 </div>
                 <div className="option-header">
@@ -92,9 +93,13 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
 
                             <div className="logout-wrapper">
                                 <Text className="user-name">{currentUser.display_name}</Text>
+                                <div className="order" onClick={() => navigate(config.order)}>
+                                    <FaShippingFast className="logout-icon" />
+                                    <p className="logout-text">Đơn hàng</p>
+                                </div>
                                 <div className="logout" onClick={handleLogout}>
                                     <LogOutIcon width="2rem" height="2rem" className="logout-icon" />
-                                    <p className="logout-text">Logout</p>
+                                    <p className="logout-text">Đăng xuất</p>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +118,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                                     <Popper className="popper" {...attrs}>
                                         <div className="wrapper-notification" tabIndex={-1}>
                                             <div className="header-notification">
-                                                <p className="heading">Notification</p>
+                                                <p className="heading">Thông báo</p>
                                                 <BellIcon
                                                     width="2.2rem"
                                                     height="2rem"
@@ -126,7 +131,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                                                         <Notification data={notification} key={index} />
                                                     ))
                                                 ) : (
-                                                    <Text className="blank">No notification</Text>
+                                                    <Text className="blank">Chưa có thông báo nào</Text>
                                                 )}
                                             </div>
                                         </div>
@@ -156,14 +161,6 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                         // </div>
                         ''
                     )}
-                    <div className="language-translate">
-                        <p className="text-header">English</p>
-                        <DownArrowIcon width="1.4rem" height="1.4rem" className="icon-header arrow-icon" />
-                    </div>
-                    <div className="currency-unit">
-                        <p className="text-header">USD</p>
-                        <DownArrowIcon width="1.4rem" height="1.4rem" className="icon-header arrow-icon" />
-                    </div>
                     {Object.keys(currentUser).length === 0 ? (
                         <div className="login-header" onClick={handleRuleLogin}>
                             <p className="text-header">Login</p>
@@ -174,7 +171,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                     )}
                     {Object.keys(currentUser).length > 0 ? (
                         <div className="wish-list" onClick={handleNavigateWishListPage}>
-                            <p className={`text-header ${wishList?.length > 0 && 'isLight'}`}>Wishlist</p>
+                            <p className={`text-header ${wishList?.length > 0 && 'isLight'}`}>Yêu thích</p>
                             <HeartIcon
                                 width="1.8rem"
                                 height="1.4rem"

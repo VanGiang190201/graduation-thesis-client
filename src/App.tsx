@@ -7,7 +7,7 @@ import { uuidv4 } from '@firebase/util';
 import DefaultLayout from './Layouts/DefaultLayout';
 import { useAppSelector } from './reudux/hook';
 import { useAppDisPatch } from './reudux/hook';
-import { apiClient } from './api/apiClient';
+// import { apiClient } from './api/apiClient';
 // import { loadCart } from './reudux/feature/cartSlide';
 import { loadWishList } from './reudux/feature/wishListSlide';
 import { publicRoutes, privateRoutes, BlockRoute } from './routes';
@@ -28,9 +28,6 @@ function App() {
     const notificationList: IGetNotification[] = useAppSelector(
         (state) => state.persistedReducer.notification.listNotification,
     );
-    useEffect(() => {
-        apiClient.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-    }, [access_token]);
 
     useEffect(() => {
         window.scrollTo({ top: 0 });

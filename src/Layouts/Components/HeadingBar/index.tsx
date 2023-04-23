@@ -15,17 +15,20 @@ const HeadingBar: React.FunctionComponent<IHeadingBarProps> = (props) => {
     const [titlePage, setTitlePage] = useState<string>('');
     useEffect(() => {
         if (pathname == '/login') setTitlePage('My Account');
-        else if (pathname == `/shop/${location.state}`) setTitlePage('List Product');
-        else if (pathname == `/product-detail/${location.state}`) setTitlePage('Product Detail');
-        else if (pathname == '/about-us') setTitlePage('About Us');
-        else if (pathname == '/order-completed') setTitlePage('Order Completed');
-        else if (pathname == '/payment') setTitlePage('Payment');
-        else if (pathname == '/cart') setTitlePage('Shopping Cart');
-        else if (pathname == '/register') setTitlePage('Create Account');
-        else if (pathname == '/wishlist') setTitlePage('Wish List');
-        else if (pathname == `/search-result/${params.keySearch}`) setTitlePage('Search Result');
+        else if (pathname == `/shop/${location.state}`) setTitlePage('Danh sách sản phẩm');
+        else if (pathname == `/products/${location.state}`) setTitlePage('Chi tiết sản phẩm');
+        else if (pathname == '/about-us') setTitlePage('Giới thiệu');
+        else if (pathname == '/order-completed') setTitlePage('Thanh toán thành công');
+        else if (pathname == '/blog') setTitlePage('Bài viết');
+        else if (pathname == '/payment') setTitlePage('Thanh toán');
+        else if (pathname == '/cart') setTitlePage('Giỏ hàng');
+        else if (pathname == '/register') setTitlePage('Tạo tài khoản');
+        else if (pathname == '/wishlist') setTitlePage('Sản phẩm yêu thích');
+        else if (pathname == '/book-view') setTitlePage('Đặt lịch tư vấn ');
+        else if (pathname == '/order') setTitlePage('Đơn hàng của bạn');
+        else if (pathname == `/search-result/${params.keySearch}`) setTitlePage('Kết quả tìm kiếm');
         else if (pathname == '/') setTitlePage('');
-        else setTitlePage('404 Not Found');
+        else setTitlePage('Không tìm thấy trang');
     }, [pathname]);
     return (
         <HeadingBarWrapper>
@@ -35,7 +38,7 @@ const HeadingBar: React.FunctionComponent<IHeadingBarProps> = (props) => {
                     ''
                 ) : (
                     <p className="description">
-                        {`Home .Page `}
+                        {`Trang chủ `}
                         <span className="mark">{`.${titlePage}`}</span>
                     </p>
                 )}
