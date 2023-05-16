@@ -9,10 +9,11 @@ const Wrapper = styled.div`
     .no-result-wrapper {
         width: 100%;
         height: 61rem;
+        text-align: center;
+        margin-top: 4rem;
     }
     .no-result {
-        width: 100%;
-        height: 100%;
+        width: 60rem;
         object-fit: cover;
     }
     .logo-bottom {

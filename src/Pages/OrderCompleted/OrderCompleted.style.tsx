@@ -29,7 +29,7 @@ const Wrapper = styled.div`
     }
 
     .description {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.6rem;
         font-weight: 600;
         text-align: center;
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
         width: 20rem;
         height: 6rem;
         background-color: var(--primary-background-color-btn);
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 600;
         font-size: 1.6rem;
         color: #fff;

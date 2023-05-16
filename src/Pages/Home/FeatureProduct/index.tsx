@@ -13,11 +13,11 @@ const FeatureProduct: React.FunctionComponent<FeatureProductProps> = (props) => 
         <Style.Wrapper>
             <Style.Header>
                 <Text className="title" textOfLine={1}>
-                    FEATURED PRODUCTS
+                    SẢN PHẨM NỔI BẬT
                 </Text>
-                <Text className="description" textOfLine={2}>
-                    Wanna shine with the most outstanding outfits? Let’s see our featured products and choose the best
-                    choice for you
+                <Text className="description" textOfLine={3}>
+                    Bạn muốn ngôi nhà của bạn tỏa sáng với những sản phẩm đồ nội thất? Hãy xem các sản phẩm nổi bật của
+                    chúng tôi và chọn sản phẩm tốt nhất phù hợp sự lựa chọn cho bạn
                 </Text>
             </Style.Header>
             <Style.WrapperContent>

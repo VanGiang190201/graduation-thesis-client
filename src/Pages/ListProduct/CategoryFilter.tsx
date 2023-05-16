@@ -16,10 +16,10 @@ const CategoryFilter: React.FunctionComponent<CategoryFilterProps> = (props) => 
     const { listCategory, setCurrentCategory } = props;
     const location = useLocation();
     const [theme, setTheme] = useState<MenuTheme>('light');
-    const [current, setCurrent] = useState(listCategory[0].id.toString());
+    const [current, setCurrent] = useState(listCategory[0]?.id.toString());
     useEffect(() => {
-        setCurrent(listCategory[0].id.toString());
-        setCurrentCategory(listCategory[0].id);
+        setCurrent(listCategory[0]?.id.toString());
+        setCurrentCategory(listCategory[0]?.id);
     }, [location.state, listCategory]);
 
     function getItem(
@@ -52,7 +52,7 @@ const CategoryFilter: React.FunctionComponent<CategoryFilterProps> = (props) => 
     return (
         <Style.Wrapper>
             <Style.Header>
-                <h3 style={{ textTransform: 'uppercase', color: '#2B2F32', fontSize: '1.6rem' }}>Category Product</h3>
+                <h3 style={{ textTransform: 'uppercase', color: '#2B2F32', fontSize: '1.6rem' }}>Danh mục sản phẩm</h3>
                 <Switch
                     checked={theme === 'dark'}
                     onChange={changeTheme}

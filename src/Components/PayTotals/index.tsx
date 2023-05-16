@@ -15,6 +15,7 @@ interface IPayTotalsProps {
     handleForm?: React.MouseEventHandler<HTMLButtonElement> | undefined;
     isLoadingPayment?: boolean;
     total: number;
+    method?: string;
 }
 
 const PayTotals: React.FunctionComponent<IPayTotalsProps> = (props) => {
@@ -31,7 +32,7 @@ const PayTotals: React.FunctionComponent<IPayTotalsProps> = (props) => {
         setTimeout(() => navigate(config.payment), 500);
         setTimeout(
             () =>
-                toast.info('We are need your information', {
+                toast.info('Hãy cho chúng tôi biết thông tin giao hàng', {
                     position: 'top-right',
                     autoClose: 1000,
                     hideProgressBar: false,
@@ -44,17 +45,24 @@ const PayTotals: React.FunctionComponent<IPayTotalsProps> = (props) => {
     };
     return (
         <Wrapper>
-            <div className="sub-totals">
-                <p className="title">Subtotals</p>
-                <p className="price">‎£{`${total.toFixed(2)}`}</p>
-            </div>
-            <div className="totals">
-                <p className="title">Totals</p>
-                <p className="price">‎£{`${(total + 10).toFixed(2)}`}</p>
-            </div>
+            {payment ? (
+                <div className="sub-totals">
+                    <p className="title">Tổng thanh toán</p>
+                    <p className="price">
+                        ‎{`${total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`}
+                    </p>
+                </div>
+            ) : (
+                <div className="sub-totals">
+                    <p className="title">Tổng đơn hàng</p>
+                    <p className="price">
+                        ‎{`${total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`}
+                    </p>
+                </div>
+            )}
             <div className="ship">
                 <input type="checkbox" className="check" onChange={handleIsChecked} />
-                <p className="description">Shipping & taxes calculated at checkout</p>
+                <p className="description">Miễn phí vận chuyển & thuế</p>
             </div>
 
             {payment ? (
@@ -62,7 +70,7 @@ const PayTotals: React.FunctionComponent<IPayTotalsProps> = (props) => {
                     className={`proceed-btn ${checked && listProductCart.length > 0 && total > 0 ? 'isChecked' : ''}`}
                     onClick={handleForm}
                 >
-                    Confirm Order
+                    Đặt hàng
                 </Button>
             ) : (
                 <Button
@@ -72,7 +80,7 @@ const PayTotals: React.FunctionComponent<IPayTotalsProps> = (props) => {
                     {isLoadingPayment ? (
                         <SpinnerIcon width="2rem" height="2rem" className="spinner-icon" />
                     ) : (
-                        'Proceed To Checkout'
+                        'Tiến hành thanh toán'
                     )}
                 </Button>
             )}

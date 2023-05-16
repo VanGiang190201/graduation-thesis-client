@@ -1,43 +1,28 @@
 import { async } from '@firebase/util';
 import * as httpRequest from './apiClient';
 
-export const getListNotificationByUserId = async (id: string) => {
+export const getListNotification = async () => {
     try {
-        const res = httpRequest.get(`/notifications?user_id=${id}`)
-        return res;
-    } catch (error) {
-        console.log(error);
-
-    }
-}
-
-export const addNewNotification = async (data: object, notification_id: string) => {
-    try {
-        const res = await httpRequest.patch(`/notifications/${notification_id}`, data);
-        return res;
-    } catch (error) {
-        console.log(error);
-
-    }
-}
-
-export const isReadingNotification = async (data: object, notification_id: string) => {
-    try {
-        const res = await httpRequest.patch(`/notifications/${notification_id}`, data);
-        return res;
-    } catch (error) {
-        console.log(error);
-
-    }
-}
-export const addNewNotificationUSer = async (data: object) => {
-    const path: string = '/notifications'
-    try {
-        const res = await httpRequest.post(path, data)
+        const res = httpRequest.get(`/notification`);
         return res;
     } catch (error) {
         console.log(error);
     }
-}
+};
 
-
+export const isReading = async (id: number) => {
+    try {
+        const res = await httpRequest.post(`/notification/${id}/read`);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const deleteNotification = async (id: number) => {
+    try {
+        const res = await httpRequest.deleteApi(`/notification/${id}`);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};

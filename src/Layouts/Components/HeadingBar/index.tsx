@@ -12,6 +12,7 @@ const HeadingBar: React.FunctionComponent<IHeadingBarProps> = (props) => {
     const pathname = location.pathname.split('%20').join(' ');
 
     const params = useParams();
+
     const [titlePage, setTitlePage] = useState<string>('');
     useEffect(() => {
         if (pathname == '/login') setTitlePage('My Account');
@@ -25,8 +26,10 @@ const HeadingBar: React.FunctionComponent<IHeadingBarProps> = (props) => {
         else if (pathname == '/register') setTitlePage('Tạo tài khoản');
         else if (pathname == '/wishlist') setTitlePage('Sản phẩm yêu thích');
         else if (pathname == '/book-view') setTitlePage('Đặt lịch tư vấn ');
+        else if (pathname == '/profile') setTitlePage('Cá nhân');
         else if (pathname == '/order') setTitlePage('Đơn hàng của bạn');
-        else if (pathname == `/search-result/${params.keySearch}`) setTitlePage('Kết quả tìm kiếm');
+        else if (pathname == `/blog/${location.state}`) setTitlePage('Chi tiết bài viết');
+        else if (decodeURIComponent(pathname) == `/search-result/${params.keySearch}`) setTitlePage('Kết quả tìm kiếm');
         else if (pathname == '/') setTitlePage('');
         else setTitlePage('Không tìm thấy trang');
     }, [pathname]);

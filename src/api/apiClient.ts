@@ -33,7 +33,7 @@ export const instanceRequest = (options: AxiosRequestConfig) => {
         if (error?.response?.status === 401) {
             //  if(error?.response?.data. )
             clearStoredAuth();
-            window.location.href = window.location.origin;
+            // window.location.href = config.login;
         }
         // logger.debug('Axios Options:', options);
         // optionally catch errors and add additional logging here
@@ -62,6 +62,18 @@ export const post = async (path: string, data?: any, option?: object) => {
         url: path,
         method: 'POST',
         data,
+    });
+    return responsive;
+};
+
+export const postFormData = async (path: string, data?: any, option?: object) => {
+    const responsive = await instanceRequest({
+        url: path,
+        method: 'POST',
+        data,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
     });
     return responsive;
 };

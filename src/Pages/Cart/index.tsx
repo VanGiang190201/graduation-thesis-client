@@ -43,10 +43,10 @@ const Cart: React.FunctionComponent<ICartProps> = () => {
                 {listProductCart?.length > 0 ? (
                     <div className="list-product">
                         <div className="title title-header">
-                            <p className="title-item">Product</p>
-                            <p className="title-item">Price</p>
-                            <p className="title-item">Quantity</p>
-                            <p className="title-item">Total</p>
+                            <p className="title-item">Sản phẩm</p>
+                            <p className="title-item">Giá</p>
+                            <p className="title-item">Số lượng</p>
+                            <p className="title-item">Tổng tiền</p>
                         </div>
                         <div className="products">
                             {listProductCart.map((item: IGetCart, index) => {
@@ -64,15 +64,15 @@ const Cart: React.FunctionComponent<ICartProps> = () => {
                     </div>
                 ) : (
                     <div className="blank">
-                        <h2>Let's Shopping! Your cart is blank</h2>
+                        <h2>Giỏ hàng của bạn trống! Hãy mua sắm</h2>
                         <Button className="btn-view-home" onClick={handleRouteHome}>
-                            HOME
+                            TRANG CHỦ
                         </Button>
                     </div>
                 )}
                 {listProductCart?.length > 0 && (
                     <div className="cart-totals">
-                        <p className="title-item title-total">Cart Totals</p>
+                        <p className="title-item title-total">Tổng tiền</p>
 
                         <div className="detail-totals">
                             <PayTotals total={totalPay} listProductCart={listProductCart} />

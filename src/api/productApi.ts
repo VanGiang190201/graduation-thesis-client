@@ -79,3 +79,13 @@ export const getHotSaleProduct = async () => {
         console.log(error);
     }
 };
+
+export const searchProduct = async (keyWork: string | undefined) => {
+    const path = `/products?key_word=${keyWork}`;
+    try {
+        const res = await httpRequest.get(path);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
+};

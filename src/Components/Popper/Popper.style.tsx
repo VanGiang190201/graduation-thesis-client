@@ -44,7 +44,7 @@ const PopperWrapper = styled.div`
             text-align: center;
             margin-top: 2rem;
             font-size: 1.6rem;
-            font-family: 'Lato';
+            font-family: 'Roboto Slab';
             font-weight: 600;
         }
     }

@@ -17,13 +17,13 @@ const OrderCompleted: React.FunctionComponent<IOrderCompletedProps> = (props) =>
         <Wrapper>
             <div className="inner">
                 <div className="order-completed">
-                    <p className="title">Your Order Is Completed!</p>
+                    <p className="title">Đơn hàng của bạn đã hoàn tất!</p>
                     <p className="description">
-                        Thank you for your order! Your order is being processed and will be completed within 3-6 hours.
-                        You will receive an email confirmation when your order is completed.
+                        Cảm ơn bạn đã đặt hàng của bạn! Đơn đặt hàng của bạn đang được xử lý và sẽ được hoàn thành trong
+                        vòng 3-6 giờ. Bạn sẽ nhận được email xác nhận khi đơn đặt hàng của bạn hoàn tất.
                     </p>
                     <Button className="continue-btn" onClick={handleRouteHomePage}>
-                        Continue Shopping
+                        Tiếp tục mua hàng
                     </Button>
                     <Image src={checkImage} alt="check-image" className="check-image" />
                     <Image src={clockImage} alt="clock-image" className="clock-image" />

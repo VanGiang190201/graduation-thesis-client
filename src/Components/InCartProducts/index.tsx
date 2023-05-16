@@ -89,15 +89,16 @@ const InCartProducts: React.FunctionComponent<IInCartProductsProps> = (props) =>
                         </Text>
 
                         <p className="code-product">
-                            Code : {data.selected_code_product ? data.selected_code_product : 'Default'}
+                            Mã : {data.selected_code_product ? data.selected_code_product : 'Mặc định'}
                         </p>
                     </div>
                 </div>
-                <p className="price">{`$ ${
-                    data?.sale
-                        ? (data?.price_product - (data?.price_product * data.sale) / 100)?.toFixed(2)
-                        : data?.price_product?.toFixed(2)
-                }`}</p>
+                <p className="price">
+                    {`${(data?.sale
+                        ? data?.price_product - (data?.price_product * data.sale) / 100
+                        : data?.price_product
+                    ).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`}{' '}
+                </p>
                 {!payment && (
                     <div className="quantity">
                         <Button
@@ -116,8 +117,10 @@ const InCartProducts: React.FunctionComponent<IInCartProductsProps> = (props) =>
                 )}
                 {!payment && (
                     <p className="total-price">
-                        ‎£
-                        {((data?.price_product - (data?.price_product * data?.sale) / 100) * quantity).toFixed(2)}
+                        {((data?.price_product - (data?.price_product * data?.sale) / 100) * quantity).toLocaleString(
+                            'vi-VN',
+                            { style: 'currency', currency: 'VND' },
+                        )}{' '}
                     </p>
                 )}
             </div>

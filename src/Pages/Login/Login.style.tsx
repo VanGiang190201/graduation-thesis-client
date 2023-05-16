@@ -32,7 +32,7 @@ const Wrapper = styled.div`
         font-size: 1.6rem;
         line-height: 2rem;
         font-weight: 500;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         color: #9096b2;
     }
 
@@ -56,7 +56,7 @@ const Wrapper = styled.div`
         font-size: 1.6rem;
         line-height: 2rem;
         font-weight: 500;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         color: #9096b2;
         margin-bottom: 1.2rem;
     }

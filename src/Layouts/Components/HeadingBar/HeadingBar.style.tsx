@@ -20,7 +20,7 @@ const HeadingBarWrapper = styled.div`
     .description {
         font-size: 1.5rem;
         line-height: 2rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 600;
         color: #000;
         word-spacing: 0.4rem;

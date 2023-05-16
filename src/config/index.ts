@@ -14,6 +14,9 @@ const config = {
     blog: '/blog',
     bookView: '/book-view',
     order: '/order',
+    forgot: '/forgot',
+    profile: '/profile',
+    detailBlog: '/blog/:id',
 };
 
 export default config;

@@ -26,43 +26,22 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props) => {
                             <Image src={aboutImage} alt="about-image" className="about-image" />
                         </div>
                         <div className="information">
-                            <p className="title">Know About Our Ecomerce Business, History</p>
-                            <p className="description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis neque ultrices mattis
-                                aliquam, malesuada diam est. Malesuada sem tristique amet erat vitae eget dolor
-                                lobortis. Accumsan faucibus vitae lobortis quis bibendum quam.
+                            <p className="title">
+                                Biết về lịch sử, hoạt động kinh doanh thương mại điện tử của chúng tôi
                             </p>
-                            <Button className="contact-btn">Contact us</Button>
+                            <p className="description">
+                                “Đã đến lúc những nhà thiết kế nội thất cần được định vị vai trò một cách riêng biệt,
+                                độc lập song song với nhiệm vụ thiết kế kiến trúc của một công trình hay dự án; cần có
+                                một bộ quy chuẩn riêng dành cho thiết kế nội thất trong quy trình thiết kế xây dựng nói
+                                chung”.
+                            </p>
+                            <Button className="contact-btn">Liên hệ chúng tôi</Button>
                         </div>
                     </div>
                 </div>
-                <div className="wrapper-features">
-                    <Features title="Our Features">
-                        <FeatureItem
-                            srcImage={freeDeliveryImage}
-                            titleFeature="Free Delivery"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                        <FeatureItem
-                            srcImage={cashBackImage}
-                            titleFeature="100% Cash Back"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                        <FeatureItem
-                            srcImage={premiumQualityImage}
-                            titleFeature="Quality Product"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                        <FeatureItem
-                            srcImage={supportImage}
-                            titleFeature="24/7 Support"
-                            descriptionFeature="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa purus gravida."
-                        />
-                    </Features>
-                </div>
                 <div className="wrapper-feedback">
                     <div className="feed-back">
-                        <p className="title-feedback">Our Client Say!</p>
+                        <p className="title-feedback">Khách hàng của chúng tôi!</p>
                         <div className="client-images">
                             <Image src={customerImages[0]} alt="first-image" className="first-image client-image" />
                             <Image src={customerImages[1]} alt="second-image" className="second-image client-image" />
@@ -73,9 +52,11 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props) => {
                             <p className="position">Ceo At Webecy Digital</p>
                         </div>
                         <div className="comment">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non duis ultrices quam vel dui
-                            sollicitudin aliquet id arcu. Nam vitae a enim nunc, sed sapien egestas ac nam. Tristique
-                            ultrices dolor aliquam lacus volutpat praesent.
+                            “Tôi sắp mở công ty nên cần hoàn thiện một số thứ trong nội thất văn phòng. Thế là mình chọn
+                            nội thất NT vì tin tưởng những kiến trúc sư lành nghề và thấu hiểu khách hàng nơi đây. Quả
+                            thật, họ không làm tôi thất vọng vì sản phẩm và chất lượng của mình. Các nhân viên công ty
+                            tôi luôn cảm thấy làm việc thoải mái hơn trong không gian thật hiện đại nhưng không kém phần
+                            tiện nghi này! Tôi rất hài lòng về những gì nội thất NT mang đến!”
                         </div>
                     </div>
                 </div>

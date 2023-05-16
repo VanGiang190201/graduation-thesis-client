@@ -53,7 +53,7 @@ const LatestProductItem: React.FunctionComponent<ILatestProductItemProps> = (pro
         } else {
             setTimeout(
                 () =>
-                    toast.info('Please ! Login to buy', {
+                    toast.info('Bạn cần đăng nhập', {
                         position: 'top-right',
                         autoClose: 1000,
                         hideProgressBar: false,
@@ -83,7 +83,7 @@ const LatestProductItem: React.FunctionComponent<ILatestProductItemProps> = (pro
                 });
             });
         } else {
-            toast.info('Please ! Login to add wish list', {
+            toast.info('Bạn cần đăng nhập', {
                 position: 'top-right',
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -131,12 +131,16 @@ const LatestProductItem: React.FunctionComponent<ILatestProductItemProps> = (pro
                     </Text>
                 </div>
                 {data.sale && (
-                    <p className="sale-price-product">{`$ ${(
-                        data.price_product -
-                        (data.price_product * data.sale) / 100
-                    ).toFixed(2)}`}</p>
+                    <p className="sale-price-product">
+                        {` ${(data.price_product - (data.price_product * data.sale) / 100).toLocaleString('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND',
+                        })}`}
+                    </p>
                 )}
-                <p className={data.sale ? 'price-product' : 'price-normal'}>{`$ ${data?.price_product}`}</p>
+                <p className={data.sale ? 'price-product' : 'price-normal'}>{` ${Number(
+                    data?.price_product,
+                ).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`}</p>
             </div>
         </Wrapper>
     );

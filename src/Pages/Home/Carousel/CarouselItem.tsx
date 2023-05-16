@@ -25,9 +25,9 @@ const CarouselItem: React.FunctionComponent<ICarouselItemProps> = (props) => {
                     <Text className="description-carousel" textOfLine={3}>
                         {data.description_carousel}
                     </Text>
-                    <Button primary className="shop-btn">
-                        Shop Now
-                    </Button>
+                    {/* <Button primary className="shop-btn">
+                        Xem sản phẩm
+                    </Button> */}
                     <Image src={lightImage} alt="" className="light-image" />
                 </div>
                 <div className="image-wrapper">

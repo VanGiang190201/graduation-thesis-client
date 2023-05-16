@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 
     .title {
         font-size: 1.8rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 600;
         line-height: 2.6rem;
         color: #1d3178;
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
     }
 
     .price {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 400;
         font-size: 1.6rem;
         line-height: 1.9rem;
@@ -53,7 +53,7 @@ const Wrapper = styled.div`
     }
 
     .description {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 400;
         font-size: 1.2rem;
         line-height: 1.4rem;
@@ -65,7 +65,7 @@ const Wrapper = styled.div`
         width: 100%;
         height: 4rem;
         background-color: #19d16f;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 700;
         font-size: 1.4rem;
         line-height: 1.7rem;

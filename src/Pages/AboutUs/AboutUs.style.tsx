@@ -47,7 +47,7 @@ const Wrapper = styled.div`
         margin-top: 3.2rem;
     }
     .description {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.6rem;
         line-height: 2.6rem;
         font-weight: 600;
@@ -61,7 +61,7 @@ const Wrapper = styled.div`
         height: 4.4rem;
         background-color: var(--primary-background-color-btn);
         border-radius: 0.3rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.6rem;
         line-height: 2.4rem;
         font-weight: 600;
@@ -133,7 +133,7 @@ const Wrapper = styled.div`
 
     .information-client {
         margin-top: 4rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
     }
 
     .name {
@@ -152,7 +152,7 @@ const Wrapper = styled.div`
 
     .comment {
         margin-top: 1.4rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.6rem;
         line-height: 2.6rem;
         color: #8a8fb9;

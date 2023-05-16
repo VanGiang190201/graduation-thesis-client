@@ -63,7 +63,8 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
             .then((data: any) => {
                 setIsLoading(false);
                 if (Object.keys(data).length > 0) {
-                    toast.success('Login success', {
+                    navigate(config.home);
+                    toast.success('Đăng nhập thành công', {
                         position: 'top-right',
                         autoClose: 1000,
                         hideProgressBar: false,
@@ -80,12 +81,12 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
             <div className="form-login">
                 <form onSubmit={handleSubmit(handleSubmitForm)}>
                     <div className="header-form">
-                        <p className="title">Login</p>
-                        <p className="description">Please login using account detail bellow.</p>
+                        <p className="title">Đăng nhập</p>
+                        <p className="description">Vui lòng nhập tài khoản của bạn để đăng nhập</p>
                     </div>
 
                     <Input
-                        label="Email Address"
+                        label="Email"
                         type="text"
                         placeholder="&nbsp;"
                         className="input"
@@ -98,7 +99,7 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
                     />
 
                     <Input
-                        label="Password"
+                        label="Mật khẩu"
                         type="password"
                         placeholder="&nbsp;"
                         className="input"
@@ -110,18 +111,20 @@ const Login: React.FunctionComponent<ILoginProps> = (props) => {
                         isSubmitted={isSubmitted}
                     />
 
-                    <p className="text-form">Forgot your password ?</p>
+                    <p className="text-form" onClick={() => navigate(config.forgot)} style={{ cursor: 'pointer' }}>
+                        Quên mật khẩu?
+                    </p>
                     <Button className="sign-in-btn">
-                        {isLoading ? <SpinnerIcon width="2rem" height="2rem" className="spinner-icon" /> : 'Sign In'}
+                        {isLoading ? <SpinnerIcon width="2rem" height="2rem" className="spinner-icon" /> : 'Đăng nhập'}
                     </Button>
                 </form>
-                <div className="social-login">
+                {/* <div className="social-login">
                     <LoginSocial />
-                </div>
+                </div> */}
                 <div className="create-account text-form ">
-                    Don’t have an account?{' '}
+                    Bạn chưa có tài khoản?{' '}
                     <Link to={config.register} className="register-link">
-                        Create account
+                        Tạo mới tài khoản
                     </Link>
                 </div>
             </div>

@@ -61,7 +61,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
         } else {
             setTimeout(
                 () =>
-                    toast.info('Please ! Login to buy', {
+                    toast.info('Bạn cần đăng nhập', {
                         position: 'top-right',
                         autoClose: 1000,
                         hideProgressBar: false,
@@ -122,7 +122,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                 });
             });
         } else {
-            toast.info('Please ! Login to add wish list', {
+            toast.info('Bạn cần đăng nhập', {
                 position: 'top-right',
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -168,10 +168,18 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                         ))}
                     </div>
                     <div className="price-product">
-                        <p className="sale-price">{`$ ${
-                            data?.price_product - (data?.price_product * data?.sale) / 100
-                        }`}</p>
-                        <p className="normal-price">{`$ ${data?.price_product}`}</p>
+                        <p className="sale-price">
+                            {`${(data?.price_product - (data?.price_product * data?.sale) / 100).toLocaleString(
+                                'vi-VN',
+                                { style: 'currency', currency: 'VND' },
+                            )}`}{' '}
+                        </p>
+                        <p className="normal-price">
+                            {Number(data?.price_product).toLocaleString('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND',
+                            })}
+                        </p>
                     </div>
 
                     <Text textOfLine={3} className="description-product">
@@ -182,7 +190,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                             {isLoading ? (
                                 <SpinnerIcon width="2rem" height="2rem" className="spinner-icon" />
                             ) : (
-                                'Add To Cart'
+                                'Thêm vào giỏ hàng'
                             )}
                         </Button>
 
@@ -191,7 +199,7 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                         </div>
                     </div>
                     <div className="quantity-wrapper">
-                        <p className="title">Quantity</p>
+                        <p className="title">Số lượng</p>
                         <div className="quantity">
                             <Button
                                 className={`decrement quantity-btn ${quantity == 1 && 'disable-btn'}`}
@@ -207,57 +215,8 @@ const TopContent: React.FunctionComponent<ITopContentProps> = (props) => {
                             </Button>
                         </div>
                     </div>
-                    <div className="size">
-                        <p className="title">Size</p>
-                        <div className="container-size">
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="size"
-                                id="X"
-                                value="X"
-                                onChange={handlePickSize}
-                            />
-                            <label htmlFor="X" className={`label-sizeX ${size === 'X' ? 'checked' : ''}`}>
-                                X
-                            </label>
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="size"
-                                id="L"
-                                value="L"
-                                onChange={handlePickSize}
-                            />
-                            <label htmlFor="L" className={`label-sizeL ${size === 'L' ? 'checked' : ''}`}>
-                                L
-                            </label>
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="size"
-                                id="XL"
-                                value="XL"
-                                onChange={handlePickSize}
-                            />
-                            <label htmlFor="XL" className={`label-sizeXL ${size === 'XL' ? 'checked' : ''}`}>
-                                XL
-                            </label>
-                            <input
-                                type="radio"
-                                className="radio"
-                                name="size"
-                                id="XXL"
-                                value="XXL"
-                                onChange={handlePickSize}
-                            />
-                            <label htmlFor="XXL" className={`label-sizeXXL ${size === 'XXL' ? 'checked' : ''}`}>
-                                XXL
-                            </label>
-                        </div>
-                    </div>
                     <div className="share">
-                        <p>Share</p>
+                        <p>Chia sẻ</p>
                         <span>
                             <div className="social-logo">
                                 <FacebookIcon width="1.8rem" height="1.8rem" className="facebook-icon icon" />

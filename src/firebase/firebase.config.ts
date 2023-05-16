@@ -1,15 +1,15 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, MessagePayload, onMessage } from "firebase/messaging"
+import { initializeApp } from 'firebase/app';
+import { getMessaging, getToken, MessagePayload, onMessage } from 'firebase/messaging';
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyCAUqNGSxrBB4XY92qgz-Fqg0LmCJwzIgo",
-    authDomain: "hekto-app.firebaseapp.com",
-    projectId: "hekto-app",
-    storageBucket: "hekto-app.appspot.com",
-    messagingSenderId: "721899590110",
-    appId: "1:721899590110:web:fccd6c56c6a41c706d8d4f",
-    measurementId: "G-V1ZKTMDEZ1"
+    apiKey: 'AIzaSyBFBedGZyNcj_1E-NvsRVV8ungs9ABZL_s',
+    authDomain: 'hekto-334ba.firebaseapp.com',
+    projectId: 'hekto-334ba',
+    storageBucket: 'hekto-334ba.appspot.com',
+    messagingSenderId: '428863195083',
+    appId: '1:428863195083:web:72b34bf85a6cef5b1c984e',
+    measurementId: 'G-7LBB5MF95T',
 };
 
 // Initialize Firebase
@@ -17,25 +17,31 @@ const initializeAuthentication = () => {
     initializeApp(firebaseConfig);
 };
 
-
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
-export const getMessagingToken = async () => {
-    let currentToken = "";
-    if (!messaging) return;
-    try {
-        currentToken = await getToken(messaging, { vapidKey: 'BLlscsXXoXaVIc9SFv0AUR4Lw8AL2lTLNJ3nwxOjVIctO3f5RzZNY7BqxD3Iyl7bUrepPrFravwJNNPAWOAvQt8' });
-        console.log("FCM registration token", currentToken);
-    } catch (error) {
-        console.log("An error occurred while retrieving token. ", error);
-    }
-    return currentToken;
+export const getMessagingToken = async (setTokenFound: any) => {
+    return getToken(messaging, {
+        vapidKey: 'BFxvQ_MQTNsGOuKmRltZm3_ErKQ1P0KwUTqSkjhWrCA9nOa8POEj49qIG0hb6VAEjHYN084MeL2z4T8Xfphgne4',
+    })
+        .then((currentToken) => {
+            console.log(currentToken);
+            if (currentToken) {
+                setTokenFound(currentToken);
+            } else {
+                console.log('No registration token available. Request permission to generate one.');
+            }
+        })
+        .catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+        });
 };
 
 export const onMessageListener = () =>
     new Promise((resolve) => {
+        console.log('Test');
         onMessage(messaging, (payload: MessagePayload) => {
+            console.log(payload);
             resolve(payload);
         });
     });

@@ -23,7 +23,7 @@ const ListProduct: React.FunctionComponent<IListProductProps> = (props) => {
             image: '',
         },
     ]);
-    const [currentCategory, setCurrentCateGory] = React.useState<number>(listCategory[0].id);
+    const [currentCategory, setCurrentCateGory] = React.useState<number>(listCategory[0]?.id);
     const [categoryItem, setCateGoryItem] = React.useState<IGetCategory>();
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const location = useLocation();

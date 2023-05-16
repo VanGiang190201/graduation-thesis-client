@@ -12,7 +12,7 @@ export const authenApi = {
             console.log(res);
             return res;
         } catch (error: any) {
-            toast.error(error.response.data.message ? error.response.data.message : 'Error login ', {
+            toast.error(error.message, {
                 position: 'top-right',
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -21,25 +21,42 @@ export const authenApi = {
                 progress: undefined,
             });
         }
-        // const { onNavigate } = body;
-        // let listUser = await getListUser();
-
-        // let currentUser = {};
-        // for (let i = 0; i < listUser.length; i++) {
-        //     if (body.email === listUser[i].email && body.password === listUser[i].password) {
-        //         currentUser = listUser[i];
-        //         onNavigate()
-        //     }
-        // }
-        // return currentUser;
     },
     register: async (body: IBodyRegister) => {
-        const path: string = '/users';
+        const path: string = '/auth/register';
         try {
             const res = await httpRequest.post(path, body);
             return res;
         } catch (error) {
             console.log(error);
+        }
+    },
+
+    sendMail: async (body: { email: string }) => {
+        const path: string = '/reset/send-mail';
+        try {
+            const res = await httpRequest.post(path, body);
+            return res;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+    sendCodeVerify: async (body: { email: string; codeVerify: number }) => {
+        const path: string = '/reset/send-verify';
+        try {
+            const res = await httpRequest.post(path, body);
+            return res;
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    },
+    changeNewPass: async (body: { email: string; password: string }) => {
+        const path: string = '/reset/send-new-pass';
+        try {
+            const res = await httpRequest.post(path, body);
+            return res;
+        } catch (error) {
+            return Promise.reject(error);
         }
     },
 };

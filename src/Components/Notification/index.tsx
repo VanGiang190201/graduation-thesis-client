@@ -2,22 +2,24 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import { useAppSelector } from '../../reudux/hook';
-import { IGetNotification } from '../../Utils/interface';
-import Image from '../Image';
+import { NotificationDataProps } from '../../Utils/interface';
+import { Button, Image } from 'antd';
 import { Text } from '../Text';
+import { bellImage } from '../../assets/images';
 import * as notificationRequest from '../../api/notificationApi';
-import { useAppDisPatch } from '../../reudux/hook';
-import { isReadingNotification } from '../../reudux/feature/notificationSlide';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 interface INotificationProps {
-    data: IGetNotification;
+    data: NotificationDataProps;
+    setNotification: any;
 }
 
 const Wrapper = styled.div`
     margin-top: 1rem;
     overflow: hidden;
-    display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
+    background-color: #e6e6e6;
     cursor: pointer;
     border-radius: 0.4rem;
     .notification-item {
@@ -26,6 +28,7 @@ const Wrapper = styled.div`
         width: 100%;
         display: flex;
         align-items: center;
+        position: relative;
         padding: 0 1rem;
         gap: 1rem;
         &:hover {
@@ -46,10 +49,16 @@ const Wrapper = styled.div`
         border-radius: 50%;
         flex-shrink: 0;
     }
+    .ant-image {
+        width: 100%;
+        height: 100%;
+    }
     .image {
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+    .image-detail {
     }
     .center-content {
         display: flex;
@@ -57,18 +66,21 @@ const Wrapper = styled.div`
         gap: 0.4rem;
     }
     .title {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.5rem;
         font-weight: 600;
     }
     .body {
         font-size: 1.4rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         color: #666;
     }
 
     .right-content {
-        position: relative;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
     }
     //more wrapper
     .more-popup {
@@ -80,53 +92,99 @@ const Wrapper = styled.div`
     .more-icon {
         color: #000;
     }
+
+    //Detail
+
+    .detail {
+        margin-top: 1rem;
+        text-align: center;
+        padding: 12px;
+        .top-detail {
+            width: 12rem;
+            height: 12rem;
+            overflow: hidden;
+            border-radius: 20px;
+            margin: auto;
+        }
+        .image-detail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .bottom-content {
+            margin-top: 10px;
+        }
+        .button-wrapper {
+            margin-top: 4px;
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+        }
+    }
 `;
 const Notification: React.FunctionComponent<INotificationProps> = (props) => {
-    const { data } = props;
-    const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
-    const notificationList = useAppSelector((state) => state.persistedReducer.notification.listNotification);
-    const dispatch = useAppDisPatch();
+    const { data, setNotification } = props;
+    const [show, setShow] = React.useState<boolean>(false);
+
     const handleReadNotification = () => {
-        const otherNotificationList = notificationList?.filter(
-            (notification) => notification.notification_id !== data.notification_id,
-        );
-        const notificationWasRead = {
-            notification_id: data.notification_id,
-            title: data.title,
-            body: data.body,
-            image: data.image,
-            isReading: true,
-        };
-        if (data.isReading == false) {
-            notificationRequest.getListNotificationByUserId(currentUser.id).then((res) => {
-                dispatch(
-                    isReadingNotification({
-                        id: res[0].id,
-                        user_id: currentUser.id,
-                        notification: [...otherNotificationList, notificationWasRead],
-                    }),
-                );
+        setShow(!show);
+    };
+
+    const handleRead = () => {
+        notificationRequest.isReading(data.id).then((res) => {
+            setNotification(res.data);
+            setShow(false);
+        });
+    };
+
+    const handleDelete = () => {
+        notificationRequest.deleteNotification(data.id).then((res) => {
+            setNotification(res.data);
+            setShow(false);
+            toast.success(res.message, {
+                position: 'top-right',
+                autoClose: 600,
+                hideProgressBar: false,
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
             });
-        }
+        });
     };
     return (
         <Wrapper>
             <div
-                className={`notification-item ${data.isReading === true ? 'isRead' : ''}`}
+                className={`notification-item ${data.is_read === true ? 'isRead' : ''}`}
                 onClick={handleReadNotification}
             >
                 <div className="left-content">
-                    <Image src={data.image} alt={data.title} className="image" />
+                    <Image src={data.image} alt={data.title} className="image" fallback={bellImage} />
                 </div>
                 <div className="center-content">
                     <Text textOfLine={1} className="title">
                         {data.title}
                     </Text>
-                    <Text textOfLine={2} className="body">
-                        {data.body}
+                    <Text textOfLine={1} className="body">
+                        {data.message}
                     </Text>
                 </div>
+                <div className="right-content">{show ? <FaAngleUp /> : <FaAngleDown />}</div>
             </div>
+            {show && (
+                <div className="detail" data-aos="fade-up">
+                    <div className="top-detail">
+                        <Image src={data.image} alt={data.title} className="image-detail" fallback={bellImage} />
+                    </div>
+                    <div className="bottom-content">
+                        <p className="title">{data.title}</p>
+                        <p className="body">{data.message}</p>
+                    </div>
+                    <div className="button-wrapper">
+                        <Button onClick={handleDelete}>Ẩn thông báo này</Button>
+                        {!data.is_read && <Button onClick={handleRead}>Đánh dấu đã xem</Button>}
+                    </div>
+                </div>
+            )}
         </Wrapper>
     );
 };

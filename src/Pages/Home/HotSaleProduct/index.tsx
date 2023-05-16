@@ -9,6 +9,8 @@ interface HotSaleProductProps {}
 const HotSaleProduct: React.FunctionComponent<HotSaleProductProps> = (props) => {
     const [listHotSaleProduct, setListHotSaleProduct] = useState<IProduct[]>([]);
 
+    console.log(listHotSaleProduct);
+
     useEffect(() => {
         productRequest.getHotSaleProduct().then((res: IProduct[]) => setListHotSaleProduct(res));
     }, []);

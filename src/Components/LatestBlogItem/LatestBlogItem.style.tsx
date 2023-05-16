@@ -92,7 +92,7 @@ const Wrapper = styled.div`
     }
 
     .description-blog {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 400;
         font-size: 1.6rem;
         line-height: 3rem;
@@ -100,7 +100,7 @@ const Wrapper = styled.div`
     }
     .read-more {
         margin-top: 1.4rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 400;
         font-size: 1.6rem;
         line-height: 3rem;

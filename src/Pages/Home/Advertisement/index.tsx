@@ -16,9 +16,11 @@ const Advertisement: React.FunctionComponent<AdvertisementProps> = (props) => {
                 <Text className="heading">{data?.heading}</Text>
                 <div className="border"></div>
                 <Text className="title">{data?.title}</Text>
-                <Text className="description">{data?.description}</Text>
+                <Text className="description">
+                    <div dangerouslySetInnerHTML={{ __html: data?.description ?? '' }} />
+                </Text>
                 <Button className="shop-now-btn" onClick={onClick}>
-                    View our product
+                    Xem
                 </Button>
             </Style.LeftAds>
             <Style.RightAds>

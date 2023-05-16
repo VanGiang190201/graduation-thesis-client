@@ -56,7 +56,7 @@ const FeatureProductItem: React.FunctionComponent<IFeatureProductItemProps> = (p
                 });
             });
         } else {
-            toast.info('Please ! Login to add wish list', {
+            toast.info('Bạn cần đăng nhập', {
                 position: 'top-right',
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -121,7 +121,7 @@ const FeatureProductItem: React.FunctionComponent<IFeatureProductItemProps> = (p
                     </Button>
                 </div>
                 <Button className="view-btn" onClick={handleViewProductDetail}>
-                    View Details
+                    Chi tiết
                 </Button>
             </div>
             <div className="information-product">
@@ -133,11 +133,12 @@ const FeatureProductItem: React.FunctionComponent<IFeatureProductItemProps> = (p
                     <div className="color"></div>
                     <div className="color"></div>
                 </div>
-                <p className="code-product">Code - Y523201</p>
-                <p className="price-product">{`$ ${(
-                    data.price_product -
-                    (data.price_product * data.sale) / 100
-                ).toFixed(2)}`}</p>
+                <p className="price-product">
+                    {`${(data.price_product - (data.price_product * data.sale) / 100).toLocaleString('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND',
+                    })}`}{' '}
+                </p>
             </div>
         </Wrapper>
     );

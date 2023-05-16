@@ -15,7 +15,7 @@ const SearchWrapper = styled.div`
         border-top-left-radius: 8rem;
         border-right: none;
         font-size: 1.6rem;
-        font-family: 'Oxygen', sans-serif;
+        font-family: 'Roboto Slab', sans-serif;
         padding: 0px 1.2rem 0 1.2rem;
     }
     .search-input:focus {

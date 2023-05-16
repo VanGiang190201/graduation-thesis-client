@@ -235,7 +235,7 @@ export const TopContentWrapper = styled.div`
         align-items: center;
     }
     .add-cart-btn {
-        width: 12rem;
+        width: 16rem;
         height: 4rem;
         font-weight: 600;
         border: none;

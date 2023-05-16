@@ -14,6 +14,9 @@ import WishList from '../Pages/WishList';
 import Blog from '../Pages/Blog';
 import BookView from '../Pages/BookView';
 import Order from '../Pages/Order';
+import ForgotPassword from '../Pages/ForgotPassword';
+import Profile from '../Pages/Profile';
+import BlogDetail from '../Pages/BlogDetail';
 
 export const publicRoutes = [
     {
@@ -52,6 +55,14 @@ export const publicRoutes = [
     {
         path: config.order,
         component: Order,
+    },
+    {
+        path: config.profile,
+        component: Profile,
+    },
+    {
+        path: config.detailBlog,
+        component: BlogDetail,
     },
 ];
 
@@ -109,6 +120,14 @@ export const privateRoutes = [
         path: config.order,
         component: Order,
     },
+    {
+        path: config.profile,
+        component: Profile,
+    },
+    {
+        path: config.detailBlog,
+        component: BlogDetail,
+    },
 ];
 
 export const BlockRoute = [
@@ -119,5 +138,9 @@ export const BlockRoute = [
     {
         path: config.register,
         component: Register,
+    },
+    {
+        path: config.forgot,
+        component: ForgotPassword,
     },
 ];

@@ -13,11 +13,11 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
         <Wrapper>
             <form>
                 <div className="contact-information">
-                    <label className="title">Contact Information</label>
+                    <label className="title">Thông tin giao hàng</label>
                     <Input
                         type="text"
                         className="phone"
-                        label="Email or mobile phone number"
+                        label="Số điện thoại"
                         placeholder="&nbsp;"
                         register={register}
                         rule="phone"
@@ -26,7 +26,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                     />
                 </div>
                 <div className="shipped-address">
-                    <label className="title">Shipping address</label>
+                    <label className="title">Địa chỉ giao hàng</label>
                     <div className="name">
                         <div className="wrapper-first-name">
                             <Input
@@ -35,7 +35,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                                 register={register}
                                 placeholder="&nbsp;"
                                 rule="firstName"
-                                label="First name"
+                                label="Họ"
                                 errors={errors}
                                 paymentPage
                             />
@@ -47,7 +47,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                                 register={register}
                                 placeholder="&nbsp;"
                                 rule="lastName"
-                                label="First name"
+                                label="Tên"
                                 errors={errors}
                                 paymentPage
                             />
@@ -57,7 +57,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                     <Input
                         type="text"
                         className="address"
-                        label="Address"
+                        label="Địa chỉ"
                         placeholder="&nbsp;"
                         register={register}
                         rule="address"
@@ -72,7 +72,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                         errors={errors}
                         placeholder="&nbsp;"
                         rule="apartment"
-                        label="Apartment"
+                        label="Tòa nhà"
                         paymentPage
                     />
 
@@ -83,7 +83,7 @@ const InformationForm: React.FunctionComponent<IInformationFormProps> = (props) 
                         errors={errors}
                         rule="city"
                         placeholder="&nbsp;"
-                        label="City"
+                        label="Thành phố"
                         paymentPage
                     />
 

@@ -32,7 +32,7 @@ const Wrapper = styled.div`
     //trending banner
     .wrapper-trending-banner {
         margin-top: 13rem;
-        min-height: 57rem;
+        min-height: 46rem;
         width: 100%;
         background-color: #f1f0ff;
         margin-bottom: 10rem;

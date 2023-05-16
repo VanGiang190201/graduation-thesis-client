@@ -1,10 +1,10 @@
 export function clearStoredAuth(): void {
     localStorage.removeItem('auth');
+    localStorage.removeItem('persist:root');
 }
 
 export function getStoredAuth(): any {
-    const storedAuth =
-        typeof window !== 'undefined' ? localStorage.getItem('auth') : '';
+    const storedAuth = typeof window !== 'undefined' ? localStorage.getItem('auth') : '';
 
     return storedAuth ? JSON.parse(storedAuth) : null;
 }

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { signOut, getAuth } from 'firebase/auth';
 import HeadlessTippy from '@tippyjs/react/headless';
-import { FaShippingFast } from 'react-icons/fa';
+import { FaShippingFast, FaUserAlt } from 'react-icons/fa';
 
 import { Wrapper } from './Header.style';
 import { useAppDisPatch } from '../../../reudux/hook';
@@ -27,8 +27,11 @@ import { Text } from '../../../Components/Text';
 import { UserLogin } from '../../../assets/images';
 import Popper from '../../../Components/Popper';
 import Notification from '../../../Components/Notification';
-import { IGetCart } from '../../../Utils/interface';
+import { IGetCart, NotificationDataProps } from '../../../Utils/interface';
 import * as cartRequest from '../../../api/cartApi';
+import * as notificationRequest from '../../../api/notificationApi';
+import { getStoredAuth } from '../../../Utils/helper/localStorage';
+import { onMessageListener } from '../../../firebase/firebase.config';
 
 interface IHeaderProps {}
 const Header: React.FunctionComponent<IHeaderProps> = () => {
@@ -37,10 +40,18 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
     const currentUser: any = useAppSelector((state) => state.persistedReducer.auth.dataUser);
     const wishList = useAppSelector((state) => state.persistedReducer.wishList.listWish);
     const cartList = useAppSelector((state) => state.persistedReducer.cart.listCart);
-    const notificationList = useAppSelector((state) => state.persistedReducer.notification.listNotification);
-    const notificationNotRead = notificationList?.filter((notification) => notification.isReading === false);
+    const [notifications, setNotification] = React.useState<NotificationDataProps[]>([]);
     const navigate = useNavigate();
     const dispatch = useAppDisPatch();
+
+    const [auth, setAuth] = React.useState<string>();
+
+    const [isChangeNoti, setIsChangeNoti] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        const auth = getStoredAuth();
+        setAuth(auth);
+    }, []);
     React.useEffect(() => {
         if (Object.keys(currentUser).length > 0) {
             cartRequest.getListCart().then((res) => {
@@ -48,6 +59,40 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
             });
         }
     }, [cartList?.length]);
+
+    React.useEffect(() => {
+        notificationRequest.getListNotification().then((res) => setNotification(res.data));
+    }, [isChangeNoti]);
+
+    const filterNotRead = notifications.filter((item: NotificationDataProps) => item.is_read === false);
+
+    React.useEffect(() => {
+        const channel = new BroadcastChannel('notifications');
+        channel.addEventListener('message', (event) => {
+            setIsChangeNoti(!isChangeNoti);
+        });
+    }, []);
+
+    onMessageListener()
+        .then((payload: any) => {
+            setIsChangeNoti(!isChangeNoti);
+            toast(
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 1rem' }}>
+                    <div className="left-content">
+                        <h4 style={{ fontWeight: '600' }}>{payload.notification.title}</h4>
+                        <p style={{ fontSize: '1.2rem' }}>{payload.notification.body}</p>
+                    </div>
+                    <div
+                        className="right-content"
+                        style={{ width: '5rem', height: '5rem', overflow: 'hidden', flexShrink: '0' }}
+                    >
+                        <Image src={payload.notification.image} alt="" />
+                    </div>
+                </div>,
+            );
+        })
+        .catch((err) => console.log('failed: ', err));
+
     const handleLogout = () => {
         const auth = getAuth();
         signOut(auth)
@@ -59,7 +104,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
             });
     };
     const handleRuleLogin = () => {
-        if (Object.keys(currentUser).length == 0) {
+        if (!auth) {
             navigate(config.login);
         }
     };
@@ -81,7 +126,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                     </div>
                 </div>
                 <div className="option-header">
-                    {Object.keys(currentUser)?.length > 0 ? (
+                    {auth ? (
                         <div className="name-wrapper">
                             <div className="avatar">
                                 <Image
@@ -93,6 +138,10 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
 
                             <div className="logout-wrapper">
                                 <Text className="user-name">{currentUser.display_name}</Text>
+                                <div className="profile" onClick={() => navigate(config.profile)}>
+                                    <FaUserAlt className="logout-icon" />
+                                    <p className="logout-text">Cá nhân</p>
+                                </div>
                                 <div className="order" onClick={() => navigate(config.order)}>
                                     <FaShippingFast className="logout-icon" />
                                     <p className="logout-text">Đơn hàng</p>
@@ -107,7 +156,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                         ''
                     )}
 
-                    {Object.keys(currentUser).length > 0 ? (
+                    {auth ? (
                         <HeadlessTippy
                             placement="bottom-end"
                             offset={[0, 8]}
@@ -126,9 +175,13 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                                                 />
                                             </div>
                                             <div className="content-notification">
-                                                {notificationList?.length > 0 ? (
-                                                    notificationList.map((notification, index) => (
-                                                        <Notification data={notification} key={index} />
+                                                {notifications?.length > 0 ? (
+                                                    notifications.map((notification, index) => (
+                                                        <Notification
+                                                            data={notification}
+                                                            key={index}
+                                                            setNotification={setNotification}
+                                                        />
                                                     ))
                                                 ) : (
                                                     <Text className="blank">Chưa có thông báo nào</Text>
@@ -141,7 +194,7 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                         >
                             <Link to="">
                                 <div className="notification">
-                                    {notificationNotRead?.length > 0 ? (
+                                    {filterNotRead?.length > 0 ? (
                                         <BellAlertIcon
                                             width="2.2rem"
                                             height="2rem"
@@ -161,15 +214,15 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                         // </div>
                         ''
                     )}
-                    {Object.keys(currentUser).length === 0 ? (
+                    {!auth ? (
                         <div className="login-header" onClick={handleRuleLogin}>
-                            <p className="text-header">Login</p>
+                            <p className="text-header">Đăng nhập</p>
                             <UserIcon width="2rem" height="1.5rem" className="icon-header user-icon" />
                         </div>
                     ) : (
                         ''
                     )}
-                    {Object.keys(currentUser).length > 0 ? (
+                    {auth ? (
                         <div className="wish-list" onClick={handleNavigateWishListPage}>
                             <p className={`text-header ${wishList?.length > 0 && 'isLight'}`}>Yêu thích</p>
                             <HeartIcon
@@ -180,11 +233,11 @@ const Header: React.FunctionComponent<IHeaderProps> = () => {
                         </div>
                     ) : (
                         <div className="wish-list" onClick={handleRuleLogin}>
-                            <p className={`text-header`}>Wishlist</p>
+                            <p className={`text-header`}>Yêu thích</p>
                             <HeartIcon width="1.8rem" height="1.4rem" className={`icon-header heart-icon`} />
                         </div>
                     )}
-                    {Object.keys(currentUser).length > 0 ? (
+                    {auth ? (
                         <Link to={config.cart}>
                             <div className="like-list">
                                 <CartIcon width="1.8rem" height="1.6rem" className="icon-header cart-icon" />

@@ -93,7 +93,7 @@ const Wrapper = styled.div`
     }
 
     .description {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 400;
         font-size: 1.7rem;
         line-height: 3.1rem;
@@ -166,7 +166,7 @@ const Wrapper = styled.div`
             justify-content: center;
         }
         .description {
-            font-family: 'Lato';
+            font-family: 'Roboto Slab';
             font-weight: 400;
             font-size: 1.5rem;
             line-height: 2.8rem;

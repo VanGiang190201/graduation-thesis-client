@@ -136,7 +136,16 @@ const Navbar: React.FunctionComponent<INavbarProps> = () => {
                             <Dropdown menu={{ items, onClick }}>
                                 <a onClick={(e) => e.preventDefault()}>
                                     <Space>
-                                        Sản phẩm
+                                        <p
+                                            style={{
+                                                fontSize: '1.6rem',
+                                                fontWeight: '600',
+                                                color: '#0d0e43',
+                                                fontFamily: 'Roboto Slab',
+                                            }}
+                                        >
+                                            Sản phẩm
+                                        </p>
                                         <ListProductIcon width="2.2rem" height="2.2rem" className="list-icon" />
                                     </Space>
                                 </a>

@@ -194,14 +194,27 @@ export const Wrapper = styled.div`
         }
         .order {
             display: flex;
-            padding: 0.4rem 0;
+            padding: 0.4rem 0.6rem;
             align-items: center;
+            justify-content: space-around;
+            width: 100%;
             cursor: pointer;
         }
         .logout {
             display: flex;
             border-top: 1px solid #ccc;
-            padding: 0.4rem 0;
+            padding: 0.4rem 0.6rem;
+            justify-content: space-around;
+            width: 100%;
+            align-items: center;
+            cursor: pointer;
+        }
+        .profile {
+            display: flex;
+            border-top: 1px solid #ccc;
+            padding: 0.4rem 0.6rem;
+            justify-content: space-around;
+            width: 100%;
             align-items: center;
             cursor: pointer;
         }

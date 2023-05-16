@@ -6,6 +6,24 @@ export const Wrapper = styled.div`
     text-align: center;
     padding: 0.4rem;
     border-bottom: 2px solid transparent;
+    .slick-arrow {
+        width: 3rem;
+        height: 3rem;
+    }
+    .slick-prev {
+        left: -38px;
+    }
+    .slick-prev::before {
+        color: #ccc;
+        font-size: 3rem;
+    }
+    .slick-next {
+        right: -28px;
+    }
+    .slick-next::before {
+        color: #ccc;
+        font-size: 3rem;
+    }
     .title-features {
         font-size: 4rem;
         line-height: 5rem;
@@ -75,7 +93,7 @@ export const FeatureItemWrapper = styled.div`
 
     .description-feature {
         text-align: center;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.6rem;
         line-height: 2.4rem;
         font-weight: 700;

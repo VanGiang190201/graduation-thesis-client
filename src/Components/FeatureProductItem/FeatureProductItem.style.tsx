@@ -127,8 +127,9 @@ const Wrapper = styled.div`
 
     .name-product {
         margin: 1.5rem 0 1rem 0;
+        height: 42px;
         width: 24rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.8rem;
         line-height: 2.1rem;
         font-weight: 700;
@@ -164,7 +165,7 @@ const Wrapper = styled.div`
     }
 
     .price-product {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-style: normal;
         font-weight: 600;
         font-size: 1.4rem;

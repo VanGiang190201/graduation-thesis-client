@@ -18,6 +18,7 @@ import { schema_payment } from '../../validation';
 import InformationForm from './InformationForm';
 import Wrapper from './Payment.style';
 import firebaseClient from '../../api/firebaseClientServer';
+import * as vnpayRequest from '../../api/vnpayApi';
 import { toast } from 'react-toastify';
 
 interface IPaymentProps {}
@@ -30,6 +31,8 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
     const [totalPay, setTotalPay] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isLoadingPayment, setIsLoadingPayment] = useState<boolean>(false);
+    const [method, setMethod] = useState<string>('direct');
+
     const dispatch = useAppDisPatch();
     const navigate = useNavigate();
 
@@ -51,78 +54,74 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
         });
     }, [cart?.length]);
     const handleSubmitFormText = (data: any) => {
-        orderRequest
-            .addOrder({
-                phone: data.phone,
-                first_name: data.firstName,
-                last_name: data.lastName,
-                address: data.address,
-                apartment: data.apartment,
-                city: data.city,
-                total_order: totalPay,
-            })
-            .then((res) => {
-                setTimeout(() => navigate(config.orderCompleted, { replace: true }));
-                toast.success(res.message, {
-                    position: 'top-right',
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    draggable: true,
-                    progress: undefined,
+        if (method === 'direct') {
+            orderRequest
+                .addOrder({
+                    phone: data.phone,
+                    first_name: data.firstName,
+                    last_name: data.lastName,
+                    address: data.address,
+                    apartment: data.apartment,
+                    city: data.city,
+                    total_order: totalPay,
+                })
+                .then((res) => {
+                    setTimeout(() => navigate(config.orderCompleted, { replace: true }));
+                    toast.success(res.message, {
+                        position: 'top-right',
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                 });
-            });
-        // dispatch(
-        //     cartSlide.actions.setShip({
-        //         informationShip: data,
-        //         order: listProductCart,
-        //     }),
-        // );
-        // cartRequest.getListCart().then((res) => {
-        //     setIsLoadingPayment(true);
-        //     dispatch(
-        //         deleteCart({
-        //             id: res[0].id,
-        //             user_id: currentUser.id,
-        //             cart: [],
-        //         }),
-        //     )
-        //         .unwrap()
-        //         .then((data) => {
-        //             setIsLoadingPayment(false);
-        //             setTimeout(() => navigate(config.orderCompleted, { replace: true }));
-        //             setTimeout(() => handleTest(), 3000);
-        //         });
-        // });
+        } else if (method === 'online') {
+            vnpayRequest
+                .checkout({
+                    phone: data.phone,
+                    first_name: data.firstName,
+                    last_name: data.lastName,
+                    address: data.address,
+                    apartment: data.apartment,
+                    city: data.city,
+                    amount: totalPay,
+                })
+                .then((res) => {
+                    window.location.replace(res.data);
+                });
+        }
     };
-    const handleRouteListProduct = () => {
-        navigate(config.listProduct);
-    };
-    const handleTest = () => {
-        firebaseClient.post('/send', {
-            to: tokenNotification,
-            notification: {
-                title: 'Successful purchase!',
-                body: 'Thank you for your purchase. Hope you will continue to support us.',
-                image: 'https://lh3.googleusercontent.com/ogw/AAEL6shVsXzxPV4yUSvUCCUt6vLX0oSYoExGn60jjo7m=s32-c-mo',
-                mutable_content: true,
-                sound: 'Tri-tone',
-            },
-            data: {
-                url: '<url of media image>',
-                dl: '<deeplink action on tap of notification>',
-            },
-        });
+
+    const handleSelectMethod = (selected: string) => {
+        setMethod(selected);
     };
     return isLoading ? (
         <Loading />
     ) : (
         <Wrapper>
             <div className="container">
-                {cart?.length > 0 ? (
-                    <div className="form">
-                        <InformationForm register={register} errors={errors} />
+                <div className="form">
+                    <InformationForm register={register} errors={errors} />
+                    <div className="method-payment">
+                        <h3>Phương thức thanh toán</h3>
+                        <div className="select">
+                            <div
+                                className={`direct ${method === 'direct' ? 'select-method' : ''}`}
+                                onClick={() => handleSelectMethod('direct')}
+                            >
+                                Thanh toán khi nhận hàng
+                            </div>
+                            <div
+                                className={`online ${method === 'online' ? 'select-method' : ''}`}
+                                onClick={() => handleSelectMethod('online')}
+                            >
+                                Thanh toán online
+                            </div>
+                        </div>
                     </div>
+                </div>
+                {/* {cart?.length > 0 ? (
                 ) : (
                     <div className="blank">
                         <h2>Let's Shopping! Your cart is blank</h2>
@@ -130,18 +129,20 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
                             List Product
                         </Button>
                     </div>
-                )}
-                {cart?.length > 0 && (
+                )} */}
+                {
                     <div className="pay-detail">
                         <div className="list-product">
                             {listProductCart.map((item: IGetCart, index) => (
                                 <InCartProducts key={index} data={item} payment />
                             ))}
                         </div>
+
                         <div className="pay-total">
                             <div className="detail-totals">
                                 <PayTotals
                                     total={totalPay}
+                                    method={method}
                                     payment
                                     listProductCart={listProductCart}
                                     handleForm={handleSubmit(handleSubmitFormText)}
@@ -150,7 +151,7 @@ const Payment: React.FunctionComponent<IPaymentProps> = (props) => {
                             </div>
                         </div>
                     </div>
-                )}
+                }
             </div>
         </Wrapper>
     );

@@ -5,8 +5,15 @@ const Wrapper = styled.div`
     margin: auto;
     background-color: #f1f0ff;
     display: flex;
+    gap: 3rem;
     .left-content {
         width: 100%;
+        margin-top: 3rem;
+        clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        overflow: hidden;
+        gap: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
+            rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     }
 
     .image-product {
@@ -22,8 +29,8 @@ const Wrapper = styled.div`
     }
 
     .title {
-        margin-top: 9rem;
-        font-size: 3.5rem;
+        margin-top: 6rem;
+        font-size: 3rem;
         line-height: 132%;
         letter-spacing: 0.015em;
         color: #151875;
@@ -31,10 +38,17 @@ const Wrapper = styled.div`
     }
 
     .description {
-        margin-top: 2.9rem;
+        margin-top: 1rem;
+        .title {
+            font-size: 2rem;
+            line-height: 132%;
+            letter-spacing: 0.015em;
+            color: #333;
+            font-weight: 600;
+        }
     }
     .detail {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.6rem;
         line-height: 2.8rem;
         color: #acabc3;
@@ -83,7 +97,7 @@ const Wrapper = styled.div`
         font-weight: 600;
     }
     .price {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.4rem;
         line-height: 1.7rem;
         font-weight: 400;

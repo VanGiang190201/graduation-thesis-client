@@ -67,6 +67,32 @@ const Wrapper = styled.div`
             background-color: var(--primary-background-color-hover-btn);
         }
     }
+
+    .method-payment {
+        margin: 20px;
+        .select {
+            display: flex;
+            justify-content: space-between;
+            flex: 1 1;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .direct,
+        .online {
+            border: 3px solid #ccc;
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .select-method {
+            border: 3px solid #0aa5ec;
+        }
+    }
     //laptop
     @media (max-width: ${(p) => p.theme.breakPoints.breakSmallDesktop}) {
         .container {

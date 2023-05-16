@@ -41,7 +41,7 @@ const NavbarWrapper = styled.div`
         margin-right: 3.5rem;
         font-size: 1.6rem;
         line-height: 2rem;
-        font-family: 'lato';
+        font-family: 'Roboto Slab';
         font-style: normal;
         font-weight: 600;
         text-decoration: none;
@@ -310,7 +310,7 @@ const NavbarWrapper = styled.div`
             margin: 0;
             font-size: 1.6rem;
             line-height: 2rem;
-            font-family: 'lato';
+            font-family: 'Roboto Slab';
             font-style: normal;
             font-weight: 600;
             text-decoration: none;

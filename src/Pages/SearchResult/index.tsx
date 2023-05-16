@@ -17,15 +17,9 @@ const SearchResult: React.FunctionComponent<ISearchResultProps> = (props) => {
     const keyword: string | undefined = useParams().keySearch;
 
     React.useEffect(() => {
-        const lowerCaseValue = keyword?.toLowerCase().trim();
-        productRequest.getProducts().then((res) => {
+        productRequest.searchProduct(keyword).then((res) => {
             setIsLoading(false);
-            const fillerData = res?.filter((item: any) => {
-                return Object.keys(item).some((key) => {
-                    return item[key]?.toString()?.toLowerCase()?.includes(lowerCaseValue);
-                });
-            });
-            setListResultSearch(fillerData);
+            setListResultSearch(res);
         });
     }, [keyword]);
     // React.useEffect(() => {
@@ -52,6 +46,7 @@ const SearchResult: React.FunctionComponent<ISearchResultProps> = (props) => {
                 </div>
             ) : (
                 <div className="no-result-wrapper">
+                    <h3>Không có kết quả tìm kiếm !</h3>
                     <Image src={noResultImage} alt="" className="no-result" />
                 </div>
             )}

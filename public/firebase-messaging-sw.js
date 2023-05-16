@@ -2,13 +2,13 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js')
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyCAUqNGSxrBB4XY92qgz-Fqg0LmCJwzIgo',
-    authDomain: 'hekto-app.firebaseapp.com',
-    projectId: 'hekto-app',
-    storageBucket: 'hekto-app.appspot.com',
-    messagingSenderId: '721899590110',
-    appId: '1:721899590110:web:fccd6c56c6a41c706d8d4f',
-    measurementId: 'G-V1ZKTMDEZ1',
+    apiKey: 'AIzaSyBFBedGZyNcj_1E-NvsRVV8ungs9ABZL_s',
+    authDomain: 'hekto-334ba.firebaseapp.com',
+    projectId: 'hekto-334ba',
+    storageBucket: 'hekto-334ba.appspot.com',
+    messagingSenderId: '428863195083',
+    appId: '1:428863195083:web:72b34bf85a6cef5b1c984e',
+    measurementId: 'G-7LBB5MF95T',
 };
 
 const defaultConfig = {

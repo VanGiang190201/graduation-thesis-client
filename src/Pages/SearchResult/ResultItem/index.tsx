@@ -91,7 +91,7 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
                 });
             });
         } else {
-            toast.info('Please ! Login to add wish list', {
+            toast.info('Bạn cần đăng nhập', {
                 position: 'top-right',
                 autoClose: 1000,
                 hideProgressBar: false,
@@ -124,9 +124,14 @@ const ResultItem: React.FunctionComponent<IResultItemProps> = (props) => {
                 </div>
                 <div className="second-information">
                     <p className="sale-price">
-                        {product?.price_product - (product?.sale * product?.price_product) / 100} VNĐ
+                        {(product?.price_product - (product?.sale * product?.price_product) / 100).toLocaleString(
+                            'vi-VN',
+                            { style: 'currency', currency: 'VND' },
+                        )}
                     </p>
-                    <p className="normal-price">{product?.price_product} VNĐ</p>
+                    <p className="normal-price">
+                        {Number(product?.price_product).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}{' '}
+                    </p>
                     <div className="star">
                         {showRateStar().map((star: number) => (
                             <StarIcon width="1.6rem" height="1.6rem" className="star-light" key={star} />

@@ -89,11 +89,10 @@ export interface IBodyLogin {
 }
 
 export interface IBodyRegister {
-    name: string;
+    user_name: string;
     email: string;
     password: string;
-    displayName: string;
-    id: string;
+    display_name: string;
 }
 
 export interface IIconProps {
@@ -135,6 +134,7 @@ export interface IGetAdDetail {
     image_first: string;
     image_second: string;
     is_used: boolean;
+    link: string;
 }
 
 export interface IGetPortfolios {
@@ -185,4 +185,37 @@ export interface OrderProps {
     time_order: string;
     status: number;
     total_order: number;
+}
+
+export interface ProfileDataProps {
+    id: string;
+    name: string;
+    user_name: string;
+    display_name: string;
+    phone: string;
+    email: string;
+    address: string;
+    birthday: string;
+    first_name: string;
+    last_name: string;
+    avatar: string;
+}
+
+export interface NotificationDataProps {
+    id: number;
+    title: string;
+    message: string;
+    image: string;
+    is_read: boolean;
+    user_id: number;
+}
+
+export interface CommentDataProps {
+    id: number;
+    product_id: number;
+    user_id: number;
+    avatar: string;
+    time_comment: string;
+    display_name: string;
+    comment: string;
 }

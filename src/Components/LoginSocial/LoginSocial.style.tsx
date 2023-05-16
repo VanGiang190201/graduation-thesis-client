@@ -29,7 +29,7 @@ const Wrapper = styled.div`
         color: #222;
         font-size: 1.3rem;
         font-weight: 600;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         position: relative;
         background-color: transparent;
         &:hover {

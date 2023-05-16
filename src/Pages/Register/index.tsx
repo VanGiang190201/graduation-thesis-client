@@ -38,9 +38,8 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
     const handleSubmitForm = (data: IFormInputRegister) => {
         setIsLoading(true);
         const newData = {
-            id: uuidv4(),
-            displayName: data.name,
-            name: data.name,
+            display_name: data.name,
+            user_name: data.name,
             email: data.email,
             password: data.password,
         };
@@ -48,7 +47,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
             .unwrap()
             .then((data) => {
                 setIsLoading(false);
-                toast.success('Register success', {
+                toast.success('Đăng ký thành công', {
                     position: 'top-right',
                     autoClose: 1000,
                     hideProgressBar: false,
@@ -65,11 +64,11 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
             <div className="form-register">
                 <form onSubmit={handleSubmit(handleSubmitForm)}>
                     <div className="header-form">
-                        <p className="title">Register</p>
-                        <p className="description">Create an account to shopping</p>
+                        <p className="title">Đăng ký</p>
+                        <p className="description">Tạo một tài khoản để mua hàng</p>
                     </div>
                     <Input
-                        label="Your Name"
+                        label="Tên của bạn"
                         type="text"
                         placeholder="&nbsp;"
                         className="input"
@@ -81,7 +80,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                         isSubmitted={isSubmitted}
                     />
                     <Input
-                        label="Email Address"
+                        label="Email"
                         type="text"
                         placeholder="&nbsp;"
                         className="input"
@@ -94,7 +93,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                     />
 
                     <Input
-                        label="Password"
+                        label="Mật khẩu"
                         type="password"
                         placeholder="&nbsp;"
                         className="input"
@@ -106,7 +105,7 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                         isSubmitted={isSubmitted}
                     />
                     <Input
-                        label="Confirm password"
+                        label="Xác nhận mật khẩu"
                         type="password"
                         placeholder="&nbsp;"
                         className="input"
@@ -119,12 +118,12 @@ const Register: React.FunctionComponent<IRegisterProps> = (props) => {
                     />
 
                     <Button className="register-btn">
-                        {isLoading ? <SpinnerIcon width="2rem" height="2rem" className="spinner-icon" /> : 'Register'}
+                        {isLoading ? <SpinnerIcon width="2rem" height="2rem" className="spinner-icon" /> : 'Đăng ký'}
                     </Button>
                     <div className="login text-form ">
-                        Already have an account?{' '}
+                        Bạn đã có tài khoản?{' '}
                         <Link to={config.login} className="login-link">
-                            Sign In
+                            Đăng nhập
                         </Link>
                     </div>
                 </form>

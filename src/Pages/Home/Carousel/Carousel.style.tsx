@@ -68,7 +68,7 @@ export const CarouselItemWrapper = styled.div`
 
     .description-carousel {
         font-size: 1.6rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-weight: 700;
         line-height: 2.8rem;
         color: #8a8fb9;

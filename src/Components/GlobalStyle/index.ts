@@ -24,13 +24,13 @@ const GlobalStyle = createGlobalStyle`
           body {
                font-size :1.6rem;
                text-rendering: optimizeSpeed; 
-               font-family: 'Lato', sans-serif;
+               font-family: 'Roboto Slab', sans-serif;
                overflow: auto;
           }
           button,input[type="text"] {
                 outline: none;
           }
            
-`
+`;
 
 export default GlobalStyle;

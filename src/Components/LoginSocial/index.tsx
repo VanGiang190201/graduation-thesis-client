@@ -69,13 +69,7 @@ const LoginSocial: React.FunctionComponent<ILoginSocialProps> = (props) => {
                     <div className="icon-wrapper">
                         <GoogleIcon width="2rem" height="2rem" className="google-icon-modal" />
                     </div>
-                    Continue with Google
-                </Button>
-                <Button className="signin-btn-wrapper" onClick={handleFacebookSignIn}>
-                    <div className="icon-wrapper">
-                        <FacebookIcon width="2rem" height="2rem" className="facebook-icon-modal" />
-                    </div>
-                    Continue with Facebook
+                    Đăng nhập với Google
                 </Button>
             </div>
         </Wrapper>

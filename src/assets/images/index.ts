@@ -18,9 +18,11 @@ import clientFirst from './clientfirst.jpg';
 import clientSecond from './clientsecond.jpg';
 import clientThird from './clientthird.jpg';
 import bgImage from './bgimage.png';
-import noResultImage from './noresult.gif';
+import noResultImage from './no_result_found.png';
 import UserLogin from './user.png';
 import backGroundImageLogin from './background.jpg';
+import mailImage from './mail.png';
+import bellImage from './bell.jpg';
 
 import hotLabel from './hot.png';
 const customerImages: string[] = [clientFirst, clientSecond, clientThird];
@@ -46,4 +48,6 @@ export {
     backGroundImageLogin,
     hotLabel,
     backgroundSliderImage,
+    mailImage,
+    bellImage,
 };

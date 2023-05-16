@@ -40,7 +40,7 @@ const Wrapper = styled.div`
         color: #ccc;
     }
     .name-product {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-style: normal;
         font-weight: 700;
         font-size: 1.6rem;

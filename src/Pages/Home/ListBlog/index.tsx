@@ -51,7 +51,7 @@ const ListBlog: React.FunctionComponent<ListBlogProps> = () => {
     return (
         <Style.Wrapper>
             <Text textOfLine={1} className="title">
-                Latest Blog
+                Bài viết hôm nay
             </Text>
             <Slider {...settings}>
                 {blogs?.map((item: IBlogProps, index: number) => {
@@ -64,6 +64,24 @@ const ListBlog: React.FunctionComponent<ListBlogProps> = () => {
 
 const Style = {
     Wrapper: styled.div`
+        .slick-arrow {
+            width: 3rem;
+            height: 3rem;
+        }
+        .slick-prev {
+            left: -38px;
+        }
+        .slick-prev::before {
+            color: #ccc;
+            font-size: 3rem;
+        }
+        .slick-next {
+            right: -28px;
+        }
+        .slick-next::before {
+            color: #ccc;
+            font-size: 3rem;
+        }
         .title {
             text-align: center;
             font-size: 4rem;

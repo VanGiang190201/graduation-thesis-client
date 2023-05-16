@@ -2,10 +2,13 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 import { authenApi } from '../../api/authApi';
 import { addNewCart } from '../../api/cartApi';
-import { addNewNotificationUSer } from '../../api/notificationApi';
 import { addNewWishList } from '../../api/wishListApi';
 import { IUser } from '../../Utils/interface';
-import { setStoredAuth } from '../../Utils/helper/localStorage';
+import { clearStoredAuth, setStoredAuth } from '../../Utils/helper/localStorage';
+import { useNavigate } from 'react-router-dom';
+import config from '../../config';
+import { getMessagingToken } from '../../firebase/firebase.config';
+import { updateDeviceToken } from '../../api/profileApi';
 
 interface IBody {
     email: string;
@@ -39,12 +42,7 @@ export const registerUser = createAsyncThunk('auth/register', async (body: any, 
                         await addNewCart({
                             user_id: res.id,
                             cart: [],
-                        }).then(
-                            await addNewNotificationUSer({
-                                user_id: res.id,
-                                notification: [],
-                            }),
-                        ),
+                        }),
                     ),
                 ),
             );
@@ -54,12 +52,15 @@ export const registerUser = createAsyncThunk('auth/register', async (body: any, 
         thunkAPI.rejectWithValue(error);
     }
 });
+
 export const authSlide = createSlice({
     name: 'auth',
     initialState,
     reducers: {
         logOut: (state) => {
             state.dataUser = {};
+            clearStoredAuth();
+            window.location.href = config.login;
         },
         logInWithFireBase: (state, action) => {
             state.dataUser = action.payload;
@@ -67,7 +68,10 @@ export const authSlide = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
+            console.log(action.payload);
+
             setStoredAuth(action.payload.access_token);
+            getMessagingToken(updateDeviceToken);
             state.dataUser = { ...action.payload };
         });
 

@@ -31,7 +31,7 @@ const Wrapper = styled.div`
         height: 4.6rem;
         background-color: #f8f8fd;
         font-size: 1.4rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         line-height: 1.7rem;
         letter-spacing: 0.02em;
     }

@@ -51,7 +51,7 @@ const FooterWrapper = styled.div`
         outline: none;
         font-size: 1.4rem;
         padding: 0.4rem;
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         color: #8a8fb9;
         flex-grow: 1;
     }
@@ -73,7 +73,7 @@ const FooterWrapper = styled.div`
     }
 
     .item-footer {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.4rem;
         font-weight: 400;
         line-height: 1.8rem;
@@ -109,7 +109,7 @@ const FooterWrapper = styled.div`
     }
 
     .copy-right {
-        font-family: 'Lato';
+        font-family: 'Roboto Slab';
         font-size: 1.4rem;
         font-weight: 400;
         line-height: 1.8rem;

@@ -24,6 +24,8 @@ import Advertisement from './Advertisement';
 import FeatureProduct from './FeatureProduct';
 import HotSaleProduct from './HotSaleProduct';
 import ListBlog from './ListBlog';
+import { useNavigate } from 'react-router-dom';
+import config from '../../config';
 
 interface IHomeProps {}
 
@@ -32,6 +34,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [adIsUsed, setAdIsUsed] = useState<IGetAdDetail>();
     const [listPortfolios, setListPortfolios] = useState<IGetPortfolios[]>([]);
+    const navigate = useNavigate();
     useEffect(() => {
         slidersRequest.getSliders().then((res) => {
             setIsLoading(false);
@@ -52,7 +55,11 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         });
     }, []);
 
-    const handleRoute = () => {};
+    const handleRoute = () => {
+        if (listPortfolios[0].id) {
+            navigate(`/shop/${listPortfolios[0].id}`, { state: listPortfolios[0].id });
+        }
+    };
     return isLoading ? (
         <Loading />
     ) : (
@@ -68,7 +75,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                 <Advertisement data={adIsUsed} onClick={handleRoute} />
                 <FeatureProduct data={listPortfolios} />
                 <div className="wrapper-offer">
-                    <Features title="What Shopex Offer!" />
+                    <Features title="Ưu đãi gì từ chúng tôi!" />
                 </div>
                 <div className="wrapper-trending-banner">
                     <TrendingBanner />

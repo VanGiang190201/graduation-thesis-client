@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CalendarIcon, PenIcon } from '../Icons';
 import Image from '../Image';
 import { Text } from '../Text';
 
 import Wrapper from './LatestBlogItem.style';
+import config from '../../config';
 interface ILatestBlogItemProps {
     data: {
         id: string;
@@ -18,8 +19,14 @@ interface ILatestBlogItemProps {
 
 const LatestBlogItem: React.FunctionComponent<ILatestBlogItemProps> = (props) => {
     const { data } = props;
+
+    const navigate = useNavigate();
+
+    const handleViewDetail = () => {
+        navigate(`/blog/${data.id}`, { state: data.id });
+    };
     return (
-        <Wrapper>
+        <Wrapper onClick={handleViewDetail}>
             <div className="top-blog">
                 <Image src={data?.image_blog} alt={data?.title_blog} className="image" />
             </div>
@@ -43,12 +50,15 @@ const LatestBlogItem: React.FunctionComponent<ILatestBlogItemProps> = (props) =>
                         {data.title_blog}
                     </Text>
                     <Text className="description-blog" textOfLine={3}>
-                        {data?.description_blog}
+                        <div
+                            style={{ minHeight: '90px' }}
+                            dangerouslySetInnerHTML={{ __html: data?.description_blog ?? '' }}
+                        />
                     </Text>
                 </div>
 
                 <Link to="" className="read-more">
-                    Read More
+                    Xem
                 </Link>
             </div>
         </Wrapper>
